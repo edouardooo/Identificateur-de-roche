@@ -100,22 +100,22 @@ def identificationmagmatique():
 
 def identificationmetamorphique():
     if st.radio("La roche a-t-elle une foliation très marquée ?", ["oui", "non"]) == "oui":
-            if st.radio("La roche contient-elle des lits sombres (micas) et des lits clairs (quartz et feldspath) ?", ["oui", "non"]) == "oui":
-                if st.radio("La roche est-elle très brillante, avec beaucoup de micas et peu de feldspaths ?", ["oui", "non"]) == "oui":
-                    roche.append("micashiste")
-                else:
-                    roche.append("gneiss")
-            elif st.radio("La roche est-elle sombre et contient des amphiboles noires (hornblende) ?", ["oui", "non"]) == "oui":
-                roche.append("amphibolite")
+        if st.radio("La roche contient-elle des lits sombres (micas) et des lits clairs (quartz et feldspath) ?", ["oui", "non"]) == "oui":
+            if st.radio("La roche est-elle très brillante, avec beaucoup de micas et peu de feldspaths ?", ["oui", "non"]) == "oui":
+                roche.append("micashiste")
             else:
-                roche.append("schiste bleu")
+                roche.append("gneiss")
+        elif st.radio("La roche est-elle sombre et contient des amphiboles noires (hornblende) ?", ["oui", "non"]) == "oui":
+            roche.append("amphibolite")
         else:
-            if st.radio("La roche présente-t-elle une abondance de grenat et de pyroxènes verts ?", ["oui", "non"]) == "oui":
-                roche.append("éclogite")
-            elif st.radio("La roche présente-t-elle une foliation que sur une partie, le reste est grenu, avec un mélange leucocrate et mélanocrate ?", ["oui", "non"]) == "oui":
-                roche.append("migmatite")
-            else:
-                roche.append("cornéenne ou schiste tacheté")
+            roche.append("schiste bleu")
+    else:
+        if st.radio("La roche présente-t-elle une abondance de grenat et de pyroxènes verts ?", ["oui", "non"]) == "oui":
+            roche.append("éclogite")
+        elif st.radio("La roche présente-t-elle une foliation que sur une partie, le reste est grenu, avec un mélange leucocrate et mélanocrate ?", ["oui", "non"]) == "oui":
+            roche.append("migmatite")
+        else:
+            roche.append("cornéenne ou schiste tacheté")
     return roche
 
 def main():
