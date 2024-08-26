@@ -142,7 +142,7 @@ def main():
     st.write("**Roche Identifiée :**")
     st.write("La roche est",", ".join(result))
     st.write("By Edouard Azoulay")
-    st.image("https://github.com/edouardooo/Identificateur-de-roche/blob/main/plutonique%20granite.jpg", use_column_width=True)
+    st.image("https://github.com/edouardooo/Identificateur-de-roche/blob/f8a774fe6bded440020d95240455ecb688fb60d2/plutonique%20granite.jpg", use_column_width=True)
 
 if __name__ == "__main__":
     main()
