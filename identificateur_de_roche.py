@@ -141,7 +141,7 @@ def main():
         result = identificationmetamorphique()
     
     st.write("**Roche Identifiée :**")
-    st.write(", ".join(result))
+    st.write("la roche est ".join(result))
     st.write("By Edouard Azoulay")
 
 if __name__ == "__main__":
