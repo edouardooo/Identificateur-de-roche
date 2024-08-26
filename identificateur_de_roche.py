@@ -122,6 +122,7 @@ def identificationmetamorphique():
 def main():
     st.title("Identificateur de roche")
     st.write("Répondez aux questions suivantes pour identifier la roche étudiée.")
+    st.write("By Azoulay Edouard")
     
     global roche
     roche = []
