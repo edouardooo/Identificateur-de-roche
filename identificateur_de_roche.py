@@ -99,8 +99,7 @@ def identificationmagmatique():
     return roche
 
 def identificationmetamorphique():
-    if st.radio("La roche possède-t-elle des minéraux visibles à l'œil nu ?", ["oui", "non"]) == "oui":
-        if st.radio("La roche a-t-elle une foliation très marquée ?", ["oui", "non"]) == "oui":
+    if st.radio("La roche a-t-elle une foliation très marquée ?", ["oui", "non"]) == "oui":
             if st.radio("La roche contient-elle des lits sombres (micas) et des lits clairs (quartz et feldspath) ?", ["oui", "non"]) == "oui":
                 if st.radio("La roche est-elle très brillante, avec beaucoup de micas et peu de feldspaths ?", ["oui", "non"]) == "oui":
                     roche.append("micashiste")
