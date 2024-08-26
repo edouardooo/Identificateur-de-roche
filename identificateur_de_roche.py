@@ -2,18 +2,18 @@ import streamlit as st
 
 def identificationsedimentaire():
     if st.radio("La roche est-elle marron foncé ou noire ?", ["oui", "non"]) == "oui":
-        roche.append("Carbonée")
+        roche.append("carbonée")
         if st.radio("La roche présente-t-elle des fragments de végétaux ?", ["oui", "non"]) == "oui":
             roche.append("tourbe")
         elif st.radio("La roche est-elle liquide ?", ["oui", "non"]) == "oui":
             roche.append("pétrole")
         elif st.radio("La roche tache-t-elle les doigts ?", ["oui", "non"]) == "oui":
-            roche.append("Houille")
+            roche.append("houille")
         else:
             roche.append("lignite")
     elif st.radio("La roche ne présente pas d'éléments figurés ou ils sont issus d'êtres vivants ?", ["oui", "non"]) == "oui":
         if st.radio("La roche fait-elle effervescence à l'acide ?", ["oui", "non"]) == "oui":
-            roche.append("Calcaire")
+            roche.append("calcaire")
         elif st.radio("La roche raye-t-elle le verre ?", ["oui", "non"]) == "oui":
             roche.append("biogène siliceuse")
             if st.radio("La roche est-elle couleur lie de vin ?", ["oui", "non"]) == "oui":
@@ -23,7 +23,7 @@ def identificationsedimentaire():
         else:
             roche.append("évaporitique")
             if st.radio("La roche est-elle rayable à l'ongle ?", ["oui", "non"]) == "oui":
-                roche.append("Gypse")
+                roche.append("gypse")
                 if st.radio("La roche a-t-elle une forme de pointe de lance ?", ["oui", "non"]) == "oui":
                     roche.append("Gypse fer de lance")
                 else:
@@ -141,7 +141,7 @@ def main():
         result = identificationmetamorphique()
     
     st.write("**Roche Identifiée :**")
-    st.write("la roche est",", ".join(result))
+    st.write("La roche est",", ".join(result))
     st.write("By Edouard Azoulay")
 
 if __name__ == "__main__":
