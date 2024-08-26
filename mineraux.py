@@ -53,7 +53,7 @@ def identificationsedimentaire():
                 if st.radio("La roche est-elle essentiellement faite de quartz et raye le verre ?", ["oui", "non"]) == "oui":
                     roche.append("grès")
                 else:
-                    roche.append("feldspath")
+                    roche.append("arkose")
         else:
             roche.append("lutite")
             if st.radio("La roche est-elle meuble ?", ["oui", "non"]) == "oui":
