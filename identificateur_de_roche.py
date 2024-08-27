@@ -74,7 +74,7 @@ def identificationsedimentaire():
 def identificationmagmatique():
     if st.radio("La roche est-elle grenue ?", ["oui", "non"]) == "non":
         roche.append("volcanique")
-        if st.radio("La roche contient-elle du quartz ?", ["oui", "non"]) == "oui":
+        if st.radio("La roche contient-elle du quartz ? A elle une couleur orange/rouge caractéristique?", ["oui", "non"]) == "oui":
             roche.append("rhyolite")
         else:
             if st.radio("La roche contient-elle des feldspath potassiques (pâte claire, pas de macles polysynthétiques) ?", ["oui", "non"]) == "oui":
