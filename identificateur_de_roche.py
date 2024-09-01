@@ -102,7 +102,7 @@ def identificationmetamorphique():
     if st.radio("La roche a-t-elle une foliation très marquée ?", ["oui", "non"]) == "oui":
         if st.radio("La roche contient-elle des lits sombres (micas) et des lits clairs (quartz et feldspath) ?", ["oui", "non"]) == "oui":
             if st.radio("La roche est-elle très brillante, avec beaucoup de micas et peu de feldspaths ?", ["oui", "non"]) == "oui":
-                roche.append("micashiste")
+                roche.append("micaschiste")
             else:
                 roche.append("gneiss")
         elif st.radio("La roche est-elle sombre et contient des amphiboles noires (hornblende) ?", ["oui", "non"]) == "oui":
