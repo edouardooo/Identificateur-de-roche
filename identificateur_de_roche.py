@@ -143,7 +143,7 @@ def main():
     st.write("La roche est",", ".join(result))
     st.write("By Edouard Azoulay")
     image_url = "https://raw.githubusercontent.com/edouardooo/Identificateur-de-roche/main/" + "%20".join(roche) + ".jpg"
-    st.image(image_url, use_column_width=True)
+    st.image("https://raw.githubusercontent.com/edouardooo/Identificateur-de-roche/main/" + "%20".join(roche) + ".jpg", use_column_width=True)
 
 if __name__ == "__main__":
     main()
