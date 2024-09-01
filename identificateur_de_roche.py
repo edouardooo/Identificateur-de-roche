@@ -144,7 +144,7 @@ def main():
     
     image_url = "https://raw.githubusercontent.com/edouardooo/Identificateur-de-roche/main/" + "%20".join(roche) + ".jpg"
     st.image("https://raw.githubusercontent.com/edouardooo/Identificateur-de-roche/main/" + "%20".join(roche) + ".jpg", use_column_width=True)
-    st.write("toutes les images sont issues de la litothèque de l'ENS de Lyon:")
+    st.write("Toutes les images sont issues de la litothèque de l'ENS de Lyon:")
     st.markdown("https://lithotheque.ens-lyon.fr/index.php")
     st.write("By Edouard Azoulay")
 
