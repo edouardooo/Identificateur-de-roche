@@ -72,9 +72,10 @@ def identificationsedimentaire():
     return roche
 
 def identificationmagmatique():
+    roche = []
     if st.radio("La roche est-elle grenue ?", ["oui", "non"]) == "non":
         roche.append("volcanique")
-        if st.radio("La roche contient-elle du quartz ? A elle une couleur orange/rouge caractéristique?", ["oui", "non"]) == "oui":
+        if st.radio("La roche contient-elle du quartz ? A-t-elle une couleur orange/rouge caractéristique?", ["oui", "non"]) == "oui":
             roche.append("rhyolite")
         else:
             if st.radio("La roche contient-elle des feldspath potassiques (pâte claire, pas de macles polysynthétiques) ?", ["oui", "non"]) == "oui":
@@ -83,7 +84,10 @@ def identificationmagmatique():
                 if st.radio("Amphibole et biotite sont-ils fréquents ?", ["oui", "non"]) == "oui":
                     roche.append("andésite")
                 else:
-                    roche.append("basalte")
+                    if st.radio("La roche a-t-elle un aspect vitré (cassure conchoïdale) ?", ["oui", "non"]) == "oui":
+                        roche.append("obsidienne")
+                    else:
+                        roche.append("basalte")
     else:
         roche.append("plutonique")
         if st.radio("La roche contient-elle du quartz (minéral qui ressemble à du gros sel et raye le verre) ?", ["oui", "non"]) == "oui":
@@ -97,6 +101,7 @@ def identificationmagmatique():
             else:
                 roche.append("gabbro")
     return roche
+
 
 def identificationmetamorphique():
     if st.radio("La roche a-t-elle une foliation très marquée ?", ["oui", "non"]) == "oui":
