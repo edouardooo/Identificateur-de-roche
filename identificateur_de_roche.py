@@ -72,7 +72,7 @@ def identificationsedimentaire():
     return roche
 
 def identificationmagmatique():
-    if st.radio("La roche est-elle grenue ?", ["oui", "non"]) == "non":
+    if st.radio("La roche est-elle grenue ? (Les minéraux sont visibles à l'œil nu, au moins sous forme de petits grains.)", ["oui", "non"]) == "non":
         roche.append("volcanique")
         if st.radio("La roche contient-elle du quartz ? A-t-elle une couleur orange/rouge caractéristique?", ["oui", "non"]) == "oui":
             roche.append("rhyolite")
