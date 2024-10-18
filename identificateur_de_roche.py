@@ -157,6 +157,14 @@ def main():
             result = identificationmetamorphique()
 
         st.write("**Roche Identifiée :**")
-        st.write("La roche est", ", ".join(result))
+    st.write("La roche est",", ".join(result))
+    
+    image_url = "https://raw.githubusercontent.com/edouardooo/Identificateur-de-roche/main/" + "%20".join(roche) + ".jpg"
+    st.image("https://raw.githubusercontent.com/edouardooo/Identificateur-de-roche/main/" + "%20".join(roche) + ".jpg", use_column_width=True)
+    st.write("Toutes les images sont issues de la litothèque de l'ENS de Lyon:")
+    st.markdown("https://lithotheque.ens-lyon.fr/index.php")
+    st.write("Le lien vers une carte participative des affleurements et des échantillons :")
+    st.markdown("https://umap.openstreetmap.fr/fr/map/la-carte-des-kayous_1119639")
+    st.write("By Edouard Azoulay")
 
        
