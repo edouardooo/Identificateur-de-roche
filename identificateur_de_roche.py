@@ -1,6 +1,8 @@
 import streamlit as st
 
+# Fonctions pour l'identification des roches sédimentaires, magmatiques et métamorphiques
 def identificationsedimentaire():
+    roche = []
     if st.radio("La roche est-elle marron foncé ou noire ?", ["oui", "non"]) == "oui":
         roche.append("carbonée")
         if st.radio("La roche présente-t-elle des fragments de végétaux ?", ["oui", "non"]) == "oui":
@@ -72,6 +74,7 @@ def identificationsedimentaire():
     return roche
 
 def identificationmagmatique():
+    roche = []
     if st.radio("La roche est-elle grenue ? (Les minéraux sont visibles à l'œil nu, au moins sous forme de petits grains.)", ["oui", "non"]) == "non":
         roche.append("volcanique")
         if st.radio("La roche contient-elle du quartz ? A-t-elle une couleur orange/rouge caractéristique?", ["oui", "non"]) == "oui":
@@ -101,8 +104,8 @@ def identificationmagmatique():
                 roche.append("gabbro")
     return roche
 
-
 def identificationmetamorphique():
+    roche = []
     if st.radio("La roche a-t-elle une foliation très marquée ?", ["oui", "non"]) == "oui":
         if st.radio("La roche contient-elle des lits sombres (micas) et des lits clairs (quartz et feldspath) ?", ["oui", "non"]) == "oui":
             if st.radio("La roche est-elle très brillante, avec beaucoup de micas et peu de feldspaths ?", ["oui", "non"]) == "oui":
@@ -122,37 +125,38 @@ def identificationmetamorphique():
             roche.append("cornéenne ou schiste tacheté")
     return roche
 
-def main():
-    st.title("Identificateur de roche")
-    st.write("Répondez aux questions suivantes pour identifier la roche que vous étudiez.")
-    
-    
-    global roche
-    roche = []
-    
-    type_roche = st.radio("La roche est-elle sédimentaire, magmatique ou métamorphique ?", 
-                          ["sédimentaire", "magmatique", "métamorphique"])
-    
-    if type_roche == "sédimentaire":
-        roche.append("sédimentaire")
-        result = identificationsedimentaire()
-    elif type_roche == "magmatique":
-        roche.append("magmatique")
-        result = identificationmagmatique()
-    else:
-        roche.append("métamorphique")
-        result = identificationmetamorphique()
-    
-    st.write("**Roche Identifiée :**")
-    st.write("La roche est",", ".join(result))
-    
-    image_url = "https://raw.githubusercontent.com/edouardooo/Identificateur-de-roche/main/" + "%20".join(roche) + ".jpg"
-    st.image("https://raw.githubusercontent.com/edouardooo/Identificateur-de-roche/main/" + "%20".join(roche) + ".jpg", use_column_width=True)
-    st.write("Toutes les images sont issues de la litothèque de l'ENS de Lyon:")
-    st.markdown("https://lithotheque.ens-lyon.fr/index.php")
-    st.write("Le lien vers une carte participative des affleurements et des échantillons :")
-    st.markdown("https://umap.openstreetmap.fr/fr/map/la-carte-des-kayous_1119639")
-    st.write("By Edouard Azoulay")
+# Fonction pour afficher la carte des kayous
+def afficher_carte():
+    st.header("La carte des kayous")
+    st.write("Voici la carte des affleurements et des échantillons.")
+    map_url = "https://umap.openstreetmap.fr/fr/map/la-carte-des-kayous_1119639"
+    st.components.v1.iframe(map_url, width=700, height=500)
 
-if __name__ == "__main__":
-    main()
+# Fonction pour afficher l'objectif
+def afficher_objectif():
+    st.header("Objectif")
+    st.write("L'objectif de cette application est d'aider à identifier différents types de roches à partir de simples questions.")
+
+# Fonction principale pour afficher le menu et les différentes sections
+def main():
+    st.sidebar.title("Menu de Navigation")
+    menu = st.sidebar.selectbox("Choisir une section", ["Identificateur", "La carte des kayous", "Objectif"])
+
+    if menu == "Identificateur":
+        st.title("Identificateur de roche")
+        st.write("Répondez aux questions suivantes pour identifier la roche que vous étudiez.")
+
+        type_roche = st.radio("La roche est-elle sédimentaire, magmatique ou métamorphique ?", 
+                              ["sédimentaire", "magmatique", "métamorphique"])
+
+        if type_roche == "sédimentaire":
+            result = identificationsedimentaire()
+        elif type_roche == "magmatique":
+            result = identificationmagmatique()
+        else:
+            result = identificationmetamorphique()
+
+        st.write("**Roche Identifiée :**")
+        st.write("La roche est", ", ".join(result))
+
+       
