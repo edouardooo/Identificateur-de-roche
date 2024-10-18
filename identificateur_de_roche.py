@@ -122,14 +122,23 @@ def identificationmetamorphique():
             roche.append("cornéenne ou schiste tacheté")
     return roche
 
-def main():
-    st.sidebar.title("Menu de Navigation")
-    menu = st.sidebar.selectbox("Choisir une section", ["Identificateur", "La carte des kayous", "Objectif"])
+
+def afficher_carte():
+    st.header("La carte des kayous")
+    st.write("Voici la carte des affleurements et des échantillons.")
+    map_url = "https://umap.openstreetmap.fr/fr/map/la-carte-des-kayous_1119639"
+    st.components.v1.iframe(map_url, width=700, height=500)
+
+
+def afficher_objectif():
+    st.header("Objectif")
+    st.write("L'objectif de cette application est d'aider à identifier différents types de roches à partir de simples questions.")
+
+def identificateur_de_rochee():
     st.title("Identificateur de roche")
     st.write("Répondez aux questions suivantes pour identifier la roche que vous étudiez.")
-    
-    
-    global roche
+
+ global roche
     roche = []
     
     type_roche = st.radio("La roche est-elle sédimentaire, magmatique ou métamorphique ?", 
@@ -156,5 +165,16 @@ def main():
     st.markdown("https://umap.openstreetmap.fr/fr/map/la-carte-des-kayous_1119639")
     st.write("By Edouard Azoulay")
 
+def main():
+    st.sidebar.title("Menu de Navigation")
+    menu = st.sidebar.selectbox("Choisir une section", ["Identificateur", "La carte des kayous", "Objectif"])
+    if menu == "Identificateur":
+        identificateur_de_rochee()
+    if menu == "La carte des kayous":
+        afficher_carte()
+    if menu == "Objectif":
+        afficher_objectif()
+    
+    
 if __name__ == "__main__":
     main()
