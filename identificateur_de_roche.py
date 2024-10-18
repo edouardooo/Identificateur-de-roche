@@ -124,6 +124,7 @@ def identificationmetamorphique():
 
 def main():
     st.sidebar.title("Menu de Navigation")
+    menu = st.sidebar.selectbox("Choisir une section", ["Identificateur", "La carte des kayous", "Objectif"])
     st.title("Identificateur de roche")
     st.write("Répondez aux questions suivantes pour identifier la roche que vous étudiez.")
     
