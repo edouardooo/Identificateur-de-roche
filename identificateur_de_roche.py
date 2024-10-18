@@ -133,7 +133,10 @@ def afficher_carte():
 
 def afficher_objectif():
     st.header("Objectif")
-    st.write("L'objectif de cette application est d'aider à identifier différents types de roches à partir de simples questions.")
+    st.write("Ce projet est un identificateur de roche et une carte géologique participative.
+Le premier permet d'identifier l'ensemble des roches du programme de BCPST en suivant une clef d'identification. Cela a pour but d'aider les étudiants de cette filière à développer leurs capacité à reconnaitre les roches. L'ensemble de ce site est codé en python et le programme est en open source sur Github.
+La deuxième partie du projet est une carte participative qui permet de localiser des affleurements ou des structures d'intérêt géologique.
+A un plus long terme, le but est de réaliser la reconnaissance de roche grâce à de la reconnaissance d'image via du deep learning.")
     st.write("By Edouard Azoulay")
 
 def identificateur_de_rochee():
