@@ -128,11 +128,13 @@ def afficher_carte():
     st.write("Voici la carte des affleurements et des échantillons.")
     map_url = "https://umap.openstreetmap.fr/fr/map/la-carte-des-kayous_1119639"
     st.components.v1.iframe(map_url, width=700, height=500)
+    st.write("By Edouard Azoulay")
 
 
 def afficher_objectif():
     st.header("Objectif")
     st.write("L'objectif de cette application est d'aider à identifier différents types de roches à partir de simples questions.")
+    st.write("By Edouard Azoulay")
 
 def identificateur_de_rochee():
     st.title("Identificateur de roche")
@@ -160,8 +162,6 @@ def identificateur_de_rochee():
     st.image("https://raw.githubusercontent.com/edouardooo/Identificateur-de-roche/main/" + "%20".join(roche) + ".jpg", use_column_width=True)
     st.write("Toutes les images sont issues de la litothèque de l'ENS de Lyon:")
     st.markdown("https://lithotheque.ens-lyon.fr/index.php")
-    st.write("Le lien vers une carte participative des affleurements et des échantillons :")
-    st.markdown("https://umap.openstreetmap.fr/fr/map/la-carte-des-kayous_1119639")
     st.write("By Edouard Azoulay")
 def main():
     st.sidebar.title("Menu de Navigation")
