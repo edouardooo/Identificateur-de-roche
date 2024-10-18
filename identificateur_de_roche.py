@@ -137,8 +137,7 @@ def afficher_objectif():
 def identificateur_de_rochee():
     st.title("Identificateur de roche")
     st.write("Répondez aux questions suivantes pour identifier la roche que vous étudiez.")
-
- global roche
+    global roche
     roche = []
     
     type_roche = st.radio("La roche est-elle sédimentaire, magmatique ou métamorphique ?", 
@@ -164,7 +163,6 @@ def identificateur_de_rochee():
     st.write("Le lien vers une carte participative des affleurements et des échantillons :")
     st.markdown("https://umap.openstreetmap.fr/fr/map/la-carte-des-kayous_1119639")
     st.write("By Edouard Azoulay")
-
 def main():
     st.sidebar.title("Menu de Navigation")
     menu = st.sidebar.selectbox("Choisir une section", ["Identificateur", "La carte des kayous", "Objectif"])
