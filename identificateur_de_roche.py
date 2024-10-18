@@ -123,6 +123,7 @@ def identificationmetamorphique():
     return roche
 
 def main():
+    st.sidebar.title("Menu de Navigation")
     st.title("Identificateur de roche")
     st.write("Répondez aux questions suivantes pour identifier la roche que vous étudiez.")
     
