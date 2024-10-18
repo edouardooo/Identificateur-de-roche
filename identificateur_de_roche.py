@@ -135,6 +135,7 @@ def afficher_objectif():
     st.header("Objectif")
     st.write("Ce projet est un identificateur de roche et une carte géologique participative.")
     st.write("Le premier permet d'identifier l'ensemble des roches du programme de BCPST en suivant une clef d'identification. Cela a pour but d'aider les étudiants de cette filière à développer leurs capacité à reconnaitre les roches. L'ensemble de ce site est codé en python et le programme est en open source sur Github.")
+    st.markdown("https://github.com/edouardooo/Identificateur-de-roche")
     st.write("La deuxième partie du projet est une carte participative qui permet de localiser des affleurements ou des structures d'intérêt géologique.")
     st.write("A un plus long terme, le but est de réaliser la reconnaissance de roche grâce à de la reconnaissance d'image via du deep learning.")
     st.write("By Edouard Azoulay")
