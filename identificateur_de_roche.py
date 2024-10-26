@@ -125,18 +125,20 @@ def identificationmetamorphique():
     return roche
 
 def detect_device():
-    st.components.v1.html(
-        """
-        <script>
-            const isMobile = /Mobi|Android/i.test(navigator.userAgent);
-            // Envoi de l'information à Streamlit via sessionStorage
-            window.parent.postMessage(isMobile ? "mobile" : "desktop", "*");
-        </script>
-        """,
-        height=0,     )
-
-    message = st.experimental_get_query_params().get("device", ["desktop"])[0]
-    return message
+    if "device" not in st.session_state:
+        st.components.v1.html(
+            """
+            <script>
+                const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+                const deviceType = isMobile ? "mobile" : "desktop";
+                window.parent.postMessage(deviceType, "*");
+            </script>
+            """,
+            height=0,
+        )
+    if "device" not in st.session_state:
+        st.session_state["device"] = "desktop"
+    return st.session_state["device"]
 
 def afficher_carte():
     st.header("La carte des kayous")
@@ -147,7 +149,6 @@ def afficher_carte():
         st.components.v1.iframe(map_url, width=360, height=600)
     else:
         st.components.v1.iframe(map_url, width=700, height=500)
-
     st.write("By Edouard Azoulay")
 
 
