@@ -1,6 +1,6 @@
 import streamlit as st
 from streamlit_javascript import st_javascript
-
+from streamlit_javascript import st_js_eval
 
 def identificationsedimentaire():
     if st.radio("La roche est-elle marron foncé ou noire ?", ["oui", "non"]) == "oui":
