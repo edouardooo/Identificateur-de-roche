@@ -124,24 +124,11 @@ def identificationmetamorphique():
             roche.append("cornéenne ou schiste tacheté")
     return roche
 
+from streamlit_javascript import st_js_eval
+
 def detect_device():
-    if "device" not in st.session_state:
-        st.session_state["device"] = "desktop"
-        
-    device = st.text_input("device_type", st.session_state["device"])
-    
-    st.components.v1.html(
-        """
-        <script>
-            const isMobile = /Mobi|Android/i.test(navigator.userAgent);
-            const deviceType = isMobile ? "mobile" : "desktop";
-            window.parent.document.querySelector("input[type='text'][name='device_type']").value = deviceType;
-            window.parent.document.querySelector("input[type='text'][name='device_type']").dispatchEvent(new Event('input', { bubbles: true }));
-        </script>
-        """,
-        height=0,
-    )
-    return device
+    device_type = st_js_eval("(() => /Mobi|Android/i.test(navigator.userAgent) ? 'mobile' : 'desktop')()")
+    return device_type
 
 def afficher_carte():
     st.header("La carte des kayous")
@@ -155,9 +142,6 @@ def afficher_carte():
         st.components.v1.iframe(map_url, width=700, height=500)
 
     st.write("By Edouard Azoulay")
-
-
-
 
 
 def afficher_objectif():
