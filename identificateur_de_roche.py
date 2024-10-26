@@ -124,18 +124,33 @@ def identificationmetamorphique():
             roche.append("cornéenne ou schiste tacheté")
     return roche
 
+def detect_device():
+    st.components.v1.html(
+        """
+        <script>
+            const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+            // Envoi de l'information à Streamlit via sessionStorage
+            window.parent.postMessage(isMobile ? "mobile" : "desktop", "*");
+        </script>
+        """,
+        height=0,     )
 
+    message = st.experimental_get_query_params().get("device", ["desktop"])[0]
+    return message
 
 def afficher_carte():
     st.header("La carte des kayous")
     st.write("Voici la carte des affleurements et des échantillons.")
     map_url = "https://umap.openstreetmap.fr/fr/map/la-carte-des-kayous_1119639"
-    is_mobile = st_javascript("() => /Mobi|Android/i.test(navigator.userAgent)")
-    if is_mobile:
-        st.components.v1.iframe(map_url, width=360, height=600) 
+    appareil = detect_device()
+    if appareil == "mobile":
+        st.components.v1.iframe(map_url, width=360, height=600)
     else:
         st.components.v1.iframe(map_url, width=700, height=500)
+
     st.write("By Edouard Azoulay")
+
+
 
 
 def afficher_objectif():
