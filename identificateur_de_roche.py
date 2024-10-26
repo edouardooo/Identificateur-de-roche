@@ -1,7 +1,7 @@
 import streamlit as st
 from streamlit_javascript import st_javascript
 #from streamlit_javascript import st_js_eval
-
+from Fonction_d_identification import identificationsedimentaire,identificationmagmatique,identificationmetamorphique
 #def detect_device():
 #    device_type = st_js_eval("(() => /Mobi|Android/i.test(navigator.userAgent) ? 'mobile' : 'desktop')()")
 #    return device_type
