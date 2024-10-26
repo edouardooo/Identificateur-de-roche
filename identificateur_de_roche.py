@@ -1,4 +1,6 @@
 import streamlit as st
+from streamlit_javascript import st_javascript
+
 
 def identificationsedimentaire():
     if st.radio("La roche est-elle marron foncé ou noire ?", ["oui", "non"]) == "oui":
@@ -123,11 +125,16 @@ def identificationmetamorphique():
     return roche
 
 
+
 def afficher_carte():
     st.header("La carte des kayous")
     st.write("Voici la carte des affleurements et des échantillons.")
     map_url = "https://umap.openstreetmap.fr/fr/map/la-carte-des-kayous_1119639"
-    st.components.v1.iframe(map_url, width=700, height=500)
+    is_mobile = st_javascript("() => /Mobi|Android/i.test(navigator.userAgent)")
+    if is_mobile:
+        st.components.v1.iframe(map_url, width=360, height=600) 
+    else:
+        st.components.v1.iframe(map_url, width=700, height=500)
     st.write("By Edouard Azoulay")
 
 
