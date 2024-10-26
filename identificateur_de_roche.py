@@ -126,30 +126,36 @@ def identificationmetamorphique():
 
 def detect_device():
     if "device" not in st.session_state:
-        st.components.v1.html(
-            """
-            <script>
-                const isMobile = /Mobi|Android/i.test(navigator.userAgent);
-                const deviceType = isMobile ? "mobile" : "desktop";
-                window.parent.postMessage(deviceType, "*");
-            </script>
-            """,
-            height=0,
-        )
-    if "device" not in st.session_state:
         st.session_state["device"] = "desktop"
-    return st.session_state["device"]
+        
+    device = st.text_input("device_type", st.session_state["device"])
+    
+    st.components.v1.html(
+        """
+        <script>
+            const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+            const deviceType = isMobile ? "mobile" : "desktop";
+            window.parent.document.querySelector("input[type='text'][name='device_type']").value = deviceType;
+            window.parent.document.querySelector("input[type='text'][name='device_type']").dispatchEvent(new Event('input', { bubbles: true }));
+        </script>
+        """,
+        height=0,
+    )
+    return device
 
 def afficher_carte():
     st.header("La carte des kayous")
     st.write("Voici la carte des affleurements et des échantillons.")
     map_url = "https://umap.openstreetmap.fr/fr/map/la-carte-des-kayous_1119639"
     appareil = detect_device()
+    
     if appareil == "mobile":
         st.components.v1.iframe(map_url, width=360, height=600)
     else:
         st.components.v1.iframe(map_url, width=700, height=500)
+
     st.write("By Edouard Azoulay")
+
 
 
 
