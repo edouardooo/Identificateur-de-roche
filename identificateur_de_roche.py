@@ -1,23 +1,12 @@
 import streamlit as st
 from streamlit_javascript import st_javascript
-#from streamlit_javascript import st_js_eval
 from fonctions_d_identification import identificationsedimentaire, identificationmagmatique, identificationmetamorphique
-
-#def detect_device():
-#    device_type = st_js_eval("(() => /Mobi|Android/i.test(navigator.userAgent) ? 'mobile' : 'desktop')()")
-#    return device_type
 
 def afficher_carte():
     st.header("La carte des kayous")
     st.write("Voici la carte des affleurements et des échantillons.")
     map_url = "https://umap.openstreetmap.fr/fr/map/la-carte-des-kayous_1119639"
-    #appareil = detect_device()
     st.components.v1.iframe(map_url, width="90%", height="90%")
-    #if appareil == "mobile":
-    #    st.components.v1.iframe(map_url, width=360, height=600)
-    #else:
-    #    st.components.v1.iframe(map_url, width=700, height=500)
-
     st.write("By Edouard Azoulay")
 
 
