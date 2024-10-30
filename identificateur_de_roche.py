@@ -22,8 +22,6 @@ def afficher_objectif():
 def identificateur_de_rochee():
     st.title("Identificateur de roche")
     st.write("Répondez aux questions suivantes pour identifier la roche que vous étudiez.")
-    global roche
-    roche = []
     
     type_roche = st.radio("La roche est-elle sédimentaire, magmatique ou métamorphique ?", 
                           ["sédimentaire", "magmatique", "métamorphique"])
