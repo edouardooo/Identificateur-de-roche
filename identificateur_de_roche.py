@@ -30,13 +30,13 @@ def identificateur_de_rochee():
     roche.clear()
     if type_roche == "sédimentaire":
         roche.append("sédimentaire")
-        result = identificationsedimentaire()
+        result = identificationsedimentaire(roche)
     elif type_roche == "magmatique":
         roche.append("magmatique")
-        result = identificationmagmatique()
+        result = identificationmagmatique(roche)
     else:
         roche.append("métamorphique")
-        result = identificationmetamorphique()
+        result = identificationmetamorphique(roche)
     
     st.write("**Roche Identifiée :**")
     st.write("La roche est",", ".join(result))
