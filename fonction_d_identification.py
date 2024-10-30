@@ -1,6 +1,5 @@
 import streamlit as st
 global roche
-roche = []
 def identificationsedimentaire():
     if st.radio("La roche est-elle marron foncé ou noire ?", ["oui", "non"]) == "oui":
         roche.append("carbonée")
