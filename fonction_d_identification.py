@@ -1,5 +1,5 @@
 import streamlit as st
-def identificationsedimentaire():
+def identificationsedimentaire(roche):
     if st.radio("La roche est-elle marron foncé ou noire ?", ["oui", "non"]) == "oui":
         roche.append("carbonée")
         if st.radio("La roche présente-t-elle des fragments de végétaux ?", ["oui", "non"]) == "oui":
@@ -70,7 +70,7 @@ def identificationsedimentaire():
         roche.append("beauxite")
     return roche
 
-def identificationmagmatique():
+def identificationmagmatique(roche):
     if st.radio("La roche est-elle grenue ? (Les minéraux sont visibles à l'œil nu, au moins sous forme de petits grains.)", ["oui", "non"]) == "non":
         roche.append("volcanique")
         if st.radio("La roche contient-elle du quartz ? A-t-elle une couleur orange/rouge caractéristique?", ["oui", "non"]) == "oui":
@@ -100,7 +100,7 @@ def identificationmagmatique():
                 roche.append("gabbro")
     return roche
 
-def identificationmetamorphique():
+def identificationmetamorphique(roche):
     if st.radio("La roche a-t-elle une foliation très marquée ?", ["oui", "non"]) == "oui":
         if st.radio("La roche contient-elle des lits sombres (micas) et des lits clairs (quartz et feldspath) ?", ["oui", "non"]) == "oui":
             if st.radio("La roche est-elle très brillante, avec beaucoup de micas et peu de feldspaths ?", ["oui", "non"]) == "oui":
