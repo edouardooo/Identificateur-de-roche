@@ -25,7 +25,8 @@ def identificateur_de_rochee():
     
     type_roche = st.radio("La roche est-elle sédimentaire, magmatique ou métamorphique ?", 
                           ["sédimentaire", "magmatique", "métamorphique"])
-    
+    global roche
+    roche = []
     if type_roche == "sédimentaire":
         roche.append("sédimentaire")
         result = identificationsedimentaire()
