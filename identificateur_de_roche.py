@@ -1,7 +1,8 @@
 import streamlit as st
 from streamlit_javascript import st_javascript
 from fonction_d_identification import identificationsedimentaire,identificationmagmatique,identificationmetamorphique
-    
+roche = []
+
 def afficher_carte():
     st.header("La carte des kayous")
     st.write("Voici la carte des affleurements et des échantillons.")
@@ -25,8 +26,7 @@ def identificateur_de_rochee():
     
     type_roche = st.radio("La roche est-elle sédimentaire, magmatique ou métamorphique ?", 
                           ["sédimentaire", "magmatique", "métamorphique"])
-    global roche
-    roche = []
+    roche.clear()
     if type_roche == "sédimentaire":
         roche.append("sédimentaire")
         result = identificationsedimentaire()
