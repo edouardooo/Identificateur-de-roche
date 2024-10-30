@@ -1,10 +1,6 @@
 import streamlit as st
 from streamlit_javascript import st_javascript
-try:
-    from fonctions_d_identification import identificationsedimentaire, identificationmagmatique, identificationmetamorphique
-    print("Modules importés avec succès")
-except ModuleNotFoundError as e:
-    print("Erreur d'importation :", e)
+from fonctions_d_identification import identificationsedimentaire, identificationmagmatique, identificationmetamorphique
     
 def afficher_carte():
     st.header("La carte des kayous")
