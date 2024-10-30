@@ -1,6 +1,7 @@
 import streamlit as st
 from streamlit_javascript import st_javascript
 from fonction_d_identification import identificationsedimentaire,identificationmagmatique,identificationmetamorphique
+global roche
 roche = []
 
 def afficher_carte():
