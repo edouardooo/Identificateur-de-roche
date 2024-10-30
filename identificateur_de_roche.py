@@ -1,6 +1,6 @@
 import streamlit as st
 from streamlit_javascript import st_javascript
-from F import identificationsedimentaire, identificationmagmatique, identificationmetamorphique
+from outil import identificationsedimentaire, identificationmagmatique, identificationmetamorphique
     
 def afficher_carte():
     st.header("La carte des kayous")
