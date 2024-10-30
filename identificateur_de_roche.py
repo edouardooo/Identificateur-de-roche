@@ -24,7 +24,7 @@ def afficher_carte():
         <div class="iframe-container">
             <iframe src="{map_url}" class="iframe"></iframe>
         </div>
-    """, height=700)
+    """, height=650)
     st.write("By Edouard Azoulay")
 
 
