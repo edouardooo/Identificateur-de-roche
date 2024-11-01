@@ -58,8 +58,8 @@ def identificateur_de_rochee():
     st.write("**Roche Identifiée :**")
     st.write("La roche est",", ".join(result))
     
-    image_url = "https://raw.githubusercontent.com/edouardooo/Identificateur-de-roche/main/photos/" + "%20".join(roche) + ".jpg"
-    st.image("https://raw.githubusercontent.com/edouardooo/Identificateur-de-roche/main/" + "%20".join(roche) + ".jpg", use_column_width=True)
+    image_url = "https://raw.githubusercontent.com/edouardooo/Identificateur-de-roche/blob/main/photos/" + "%20".join(roche) + ".jpg"
+    st.image("https://raw.githubusercontent.com/edouardooo/Identificateur-de-roche/blob/main/photos/" + "%20".join(roche) + ".jpg", use_column_width=True)
     st.write("Toutes les images sont issues de la litothèque de l'ENS de Lyon:")
     st.markdown("https://lithotheque.ens-lyon.fr/index.php")
     st.write("By Edouard Azoulay")
