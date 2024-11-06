@@ -38,7 +38,6 @@ def afficher_objectif():
     st.write("La deuxième partie du projet est une carte participative qui permet de localiser des affleurements ou des structures d'intérêt géologique.")
     st.write("La dernière partie du projet est un dictionnaire des termes géologiques. Il est participatif et les utilisateurs peuvent faire des sugestions de modifications qui seront validées ou non par les administrateurs.")
     st.write("A un plus long terme, le but est de réaliser la reconnaissance de roche grâce à de la reconnaissance d'image via du deep learning.")
-    st.write("Ce dictionnaire fonctionne grace à SQlite")
     st.write("By Edouard Azoulay")
 
 def identificateur_de_rochee():
