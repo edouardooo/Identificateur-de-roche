@@ -63,9 +63,14 @@ def identificateur_de_rochee():
     st.write("Toutes les images sont issues de la litothèque de l'ENS de Lyon:")
     st.markdown("https://lithotheque.ens-lyon.fr/index.php")
     st.write("By Edouard Azoulay")
+
+def dico():
+   st.title("Dictionnaire des termes géologiques")
+   
+    
 def main():
     st.sidebar.title("Menu de Navigation")
-    menu = st.sidebar.selectbox("Choisir une section", ["Identificateur", "La carte des kayous", "Objectif"])
+    menu = st.sidebar.selectbox("Choisir une section", ["Identificateur", "La carte des kayous","Dictionnaire","Objectif"])
     if menu == "Identificateur":
         identificateur_de_rochee()
     if menu == "La carte des kayous":
