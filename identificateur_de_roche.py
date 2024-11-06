@@ -64,7 +64,7 @@ def identificateur_de_rochee():
     st.markdown("https://lithotheque.ens-lyon.fr/index.php")
     st.write("By Edouard Azoulay")
 
-def dico():
+def afficher_dico():
    st.title("Dictionnaire des termes géologiques")
    
     
@@ -77,6 +77,8 @@ def main():
         afficher_carte()
     if menu == "Objectif":
         afficher_objectif()
+    if menu=="Dictionnaire":
+       afficher_dico()
     
     
 if __name__ == "__main__":
