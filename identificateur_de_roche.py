@@ -1,6 +1,7 @@
 import streamlit as st
 from streamlit_javascript import st_javascript
 from fonction_d_identification import identificationsedimentaire,identificationmagmatique,identificationmetamorphique
+from dictionnaire import afficher_dico()
 global roche
 roche = []
 
@@ -64,9 +65,7 @@ def identificateur_de_rochee():
     st.markdown("https://lithotheque.ens-lyon.fr/index.php")
     st.write("By Edouard Azoulay")
 
-def afficher_dico():
-   st.title("Dictionnaire des termes géologiques")
-   
+
     
 def main():
     st.sidebar.title("Menu de Navigation")
