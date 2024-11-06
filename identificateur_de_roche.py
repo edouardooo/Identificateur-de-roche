@@ -9,7 +9,6 @@ def afficher_carte():
     st.header("La carte des kayous")
     st.write("Voici la carte des affleurements et des échantillons.")
     map_url = "https://umap.openstreetmap.fr/fr/map/la-carte-des-kayous_1135136"
-    #st.components.v1.iframe(map_url, width=700, height=600)
     st.components.v1.html(f"""
         <style>
             .iframe-container {{
