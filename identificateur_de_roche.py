@@ -2,7 +2,7 @@ import streamlit as st
 from streamlit_javascript import st_javascript
 from fonction_d_identification import identificationsedimentaire,identificationmagmatique,identificationmetamorphique
 from dictionnaire import afficher_dico
-from UPLOAD_IMAGE import uploader_image
+from upload_image import uploader_image
 global roche
 roche = []
 
