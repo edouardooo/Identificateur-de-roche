@@ -32,12 +32,23 @@ def uploader_image():
             # Récupérer l'URL de l'image
             image_url = response['secure_url']
             st.write(f"{{{{{image_url}}}}}")  # Affichage dans le format demandé
-            if st.button('Copier le lien'):
-                # Javascript pour copier le texte dans le presse-papiers
+            copy_button = st.button('Copier le lien')
+            
+            if copy_button:
+                # Injecter du JS pour copier le texte dans le presse-papiers
                 st_javascript(f"""
-                navigator.clipboard.writeText("{{{{{image_url}}}}}");
+                const textToCopy = '{{{{{image_url}}}}}';
+                navigator.clipboard.writeText(textToCopy).then(function() {{
+                    console.log('Texte copié: ' + textToCopy);
+                    alert('Lien copié !');
+                }}).catch(function(err) {{
+                    console.error('Erreur lors de la copie dans le presse-papiers: ', err);
+                }});
                 """)
-                st.success("Lien copié !")
+    
+        st.success("Image uploadée avec succès !")
+    else:
+        st.warning("Veuillez télécharger une image.")
 
     
         st.success("Image uploadée avec succès !")
