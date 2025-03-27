@@ -2,14 +2,12 @@ from streamlit_javascript import st_javascript
 import streamlit as st
 import cloudinary.uploader
 import cloudinary.api
-import requests
-
 
 # Configure Cloudinary avec votre API Key et API Secret
 cloudinary.config(
     cloud_name="dmyghvwnw",  # Remplacez par votre cloud_name
-    api_key="432933417465676",        # Remplacez par votre api_key
-    api_secret="ma9Y1jITjIZCxjOqtTVnzT3cg2s"   # Remplacez par votre api_secret
+    api_key="432933417465676",  # Remplacez par votre api_key
+    api_secret="ma9Y1jITjIZCxjOqtTVnzT3cg2s"  # Remplacez par votre api_secret
 )
 
 def uploader_image():
@@ -31,8 +29,10 @@ def uploader_image():
             
             # Récupérer l'URL de l'image
             image_url = response['secure_url']
-            st.write(f"{{{{{image_url}}}}}")  # Affichage dans le format demandé
             
+            # Affichage du lien dans une zone de texte (lecture seule)
+            st.text_area("Lien direct", value=f"{{{{{image_url}}}}}", height=50)
+
             # Ajout du bouton pour copier le lien
             copy_button = st.button('Copier le lien')
             
@@ -41,8 +41,7 @@ def uploader_image():
                 st_javascript(f"""
                 const textToCopy = '{{{{{image_url}}}}}';
                 navigator.clipboard.writeText(textToCopy).then(function() {{
-                    console.log('Texte copié: ' + textToCopy);
-                    alert('Lien copié !');
+                    alert('Lien copié dans le presse-papiers !');
                 }}).catch(function(err) {{
                     console.error('Erreur lors de la copie dans le presse-papiers: ', err);
                 }});
