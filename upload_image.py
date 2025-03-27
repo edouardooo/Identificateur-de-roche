@@ -30,8 +30,8 @@ def uploader_image():
             # Récupérer l'URL de l'image
             image_url = response['secure_url']
             
-            # Affichage du lien dans une zone de texte (lecture seule)
-            st.text_area("Lien direct", value=f"{{{{{image_url}}}}}", height=50)
+            # Affichage du lien dans une zone de texte (lecture seule) avec échappement des accolades
+            st.text_area("Lien direct", value=f"{{{{ {image_url} }}}}", height=50)
 
             # Ajout du bouton pour copier le lien
             copy_button = st.button('Copier le lien')
@@ -50,3 +50,4 @@ def uploader_image():
         st.success("Image uploadée avec succès !")
     else:
         st.warning("Veuillez télécharger une image.")
+
