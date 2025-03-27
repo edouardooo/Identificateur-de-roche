@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
 
-CLIENT_ID = "TON_CLIENT_ID"  # Remplace par ta vraie clé Imgur
+CLIENT_ID = "00c6d0342204835"  # Remplace par ta vraie clé Imgur
 
 def uploader_image():
     uploaded_file = st.file_uploader("Choisissez une image", type=["jpg", "jpeg", "png"])
