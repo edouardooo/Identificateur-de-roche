@@ -26,7 +26,8 @@ def afficher_carte():
             <iframe src="{map_url}" class="iframe"></iframe>
         </div>
     """, height=650)
-    
+
+    st.write("Vous pouvez modifier la carte et rajouter des points! Pour ajouter des photos dans vos descriptions, déposez vos photos ci-dessous copiez le lien entre deux doubles accolades {{ lien à insérer }}")
     st.subheader("Uploader une photo et récupérer le lien direct")
     uploader_image()
 
