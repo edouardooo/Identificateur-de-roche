@@ -17,18 +17,14 @@ def afficher_carte():
             .iframe-container {{
                 width: 100%;
                 height: 80vh; /* 80% de la hauteur de la fenêtre */
-                margin: 0;  /* Supprime toutes les marges externes */
-                padding: 0; /* Supprime les padding internes */
             }}
             .iframe {{
                 width: 100%;
                 height: 100%;
-                border: none;
-                margin: 0; /* Supprime la marge autour de l'iframe */
-                padding: 0; /* Supprime le padding interne */
+               
             }}
             body {{
-                margin: 0; /* Enlève les marges par défaut du body */
+            
             }}
         </style>
         <div class="iframe-container">
