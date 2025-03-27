@@ -29,7 +29,7 @@ def afficher_carte():
     st.write("By Edouard Azoulay")
 
     
-    st.subheader("Uploader une photo sur Imgur")
+    st.subheader("Uploader une photo et récupérer le lien direct")
     uploader_image()
 
 
