@@ -12,7 +12,7 @@ def afficher_carte():
     st.write("Vous pouvez modifier la carte et rajouter des points! Pour ajouter des photos dans vos descriptions, déposez-les en dessous de la carte et copiez le lien entre deux doubles accolades {{ lien à insérer }}")
 
     map_url = "https://umap.openstreetmap.fr/fr/map/la-carte-des-kayous_1135136"
-     st.components.v1.html(f"""
+    st.components.v1.html(f"""
         <style>
             .iframe-container {{
                 width: 100%;
@@ -21,10 +21,6 @@ def afficher_carte():
             .iframe {{
                 width: 100%;
                 height: 100%;
-               
-            }}
-            body {{
-            
             }}
         </style>
         <div class="iframe-container">
