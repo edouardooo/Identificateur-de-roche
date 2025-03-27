@@ -34,8 +34,7 @@ def afficher_carte():
         </div>
     """, height=650)
 
-    st.write("Vous pouvez modifier la carte et rajouter des points! Pour ajouter des photos dans vos descriptions, déposez vos photos ci-dessous copiez le lien entre deux doubles accolades {{ lien à insérer }}")
-    st.subheader("Uploader une photo et récupérer le lien direct")
+    st.markdown("<div style='margin-top: -10px;'>Vous pouvez modifier la carte et rajouter des points! Pour ajouter des photos dans vos descriptions, déposez vos photos ci-dessous copiez le lien entre deux doubles accolades {{ lien à insérer }}</div>", unsafe_allow_html=True)    st.subheader("Uploader une photo et récupérer le lien direct")
     uploader_image()
 
     st.write("By Edouard Azoulay")
