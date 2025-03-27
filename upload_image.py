@@ -34,7 +34,7 @@ def uploader_image():
             if st.button('Copier le lien'):
             # Javascript pour copier le texte dans le presse-papiers
                 st_javascript(f"""
-                navigator.clipboard.writeText("{image_url}");
+                navigator.clipboard.writeText("{{{{{image_url}}}}}");
                 """)
                 st.success("Lien copié !")
     
