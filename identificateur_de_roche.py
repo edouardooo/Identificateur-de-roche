@@ -60,7 +60,7 @@ def identificateur_de_rochee():
     st.write("La roche est",", ".join(result))
     
     image_url = "https://raw.githubusercontent.com/edouardooo/Identificateur-de-roche/refs/heads/main/photos/" + "%20".join(roche) + ".jpg"
-    st.image(image_url, use_column_width=True)
+    st.image(image_url, use_container_width=True)
     st.write("Toutes les images sont issues de la litothèque de l'ENS de Lyon:")
     st.markdown("https://lithotheque.ens-lyon.fr/index.php")
     st.write("By Edouard Azoulay")
