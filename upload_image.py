@@ -33,11 +33,12 @@ def uploader_image():
             image_url = response['secure_url']
             st.write(f"{{{{{image_url}}}}}")  # Affichage dans le format demandé
             if st.button('Copier le lien'):
-            # Javascript pour copier le texte dans le presse-papiers
+                # Javascript pour copier le texte dans le presse-papiers
                 st_javascript(f"""
                 navigator.clipboard.writeText("{{{{{image_url}}}}}");
                 """)
                 st.success("Lien copié !")
+
     
         st.success("Image uploadée avec succès !")
     else:
