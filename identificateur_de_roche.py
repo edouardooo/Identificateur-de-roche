@@ -15,6 +15,7 @@ def afficher_carte():
             .iframe-container {{
                 width: 100%;
                 height: 80vh; /* 80% de la hauteur de la fenêtre */
+                margin-bottom: 0px;
             }}
             .iframe {{
                 width: 100%;
