@@ -1,3 +1,4 @@
+from streamlit_javascript import st_javascript
 import streamlit as st
 import cloudinary.uploader
 import cloudinary.api
