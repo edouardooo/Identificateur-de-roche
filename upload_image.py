@@ -31,9 +31,6 @@ def uploader_image():
         st.subheader("Voici le lien direct de votre image:")
         st.write(f"{{{{ {image_url} }}}}")  # Affichage dans le format demandé
         
-        # Affichage de l'image dans son format original
-        st.image(image_url, caption="Image uploadée", use_container_width=True)
-        
         st.success("Image uploadée avec succès !")
     else:
         st.warning("Veuillez télécharger une image.")
