@@ -26,11 +26,11 @@ def afficher_carte():
             <iframe src="{map_url}" class="iframe"></iframe>
         </div>
     """, height=650)
-    st.write("By Edouard Azoulay")
-
     
     st.subheader("Uploader une photo et récupérer le lien direct")
     uploader_image()
+
+    st.write("By Edouard Azoulay")
 
 
 def afficher_objectif():
