@@ -38,4 +38,39 @@ def uploader_image():
             # Bouton pour copier le lien dans le presse-papiers
             if st.button('Copier le lien'):
                 # Envoi d'un message pour indiquer que le lien a été copié
-                st.success("Lien copié dans le presse-papi
+                st.success("Lien copié dans le presse-papiers !")
+
+                # JavaScript pour copier le texte dans le presse-papiers
+                st_javascript(f"""
+                const textToCopy = '{{ {st.session_state.image_url} }}';
+                navigator.clipboard.writeText(textToCopy).then(function() {{
+                    console.log('Lien copié dans le presse-papiers');
+                }}).catch(function(err) {{
+                    console.error('Erreur lors de la copie dans le presse-papiers: ', err);
+                }});
+                """)
+
+        st.success("Image uploadée avec succès !")
+    elif st.session_state.image_url:
+        # Si une image a déjà été téléchargée précédemment, ne pas redemander à l'utilisateur
+        st.image(st.session_state.image_url, caption="Image précédente", width=150)
+        st.subheader("Voici le lien direct de votre image:")
+        st.markdown(f"**Lien direct:** {{ {st.session_state.image_url} }}")
+
+        # Bouton pour copier le lien dans le presse-papiers
+        if st.button('Copier le lien'):
+            # Envoi d'un message pour indiquer que le lien a été copié
+            st.success("Lien copié dans le presse-papiers !")
+
+            # JavaScript pour copier le texte dans le presse-papiers
+            st_javascript(f"""
+            const textToCopy = '{{ {st.session_state.image_url} }}';
+            navigator.clipboard.writeText(textToCopy).then(function() {{
+                console.log('Lien copié dans le presse-papiers');
+            }}).catch(function(err) {{
+                console.error('Erreur lors de la copie dans le presse-papiers: ', err);
+            }});
+            """)
+
+    else:
+        st.warning("Veuillez télécharger une image.")
