@@ -112,5 +112,4 @@ def uploader_image():
     else:
         st.warning("Veuillez télécharger une image.")
 
-# Test direct de la fonction
-uploader_image()
+
