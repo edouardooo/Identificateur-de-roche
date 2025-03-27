@@ -9,6 +9,8 @@ roche = []
 def afficher_carte():
     st.header("La carte des kayous")
     st.write("Voici la carte des affleurements et des échantillons.")
+    st.write("Vous pouvez modifier la carte et rajouter des points! Pour ajouter des photos dans vos descriptions, déposez-les en dessous de la carte et copiez le lien entre deux doubles accolades {{ lien à insérer }}")
+
     map_url = "https://umap.openstreetmap.fr/fr/map/la-carte-des-kayous_1135136"
      st.components.v1.html(f"""
         <style>
@@ -34,7 +36,6 @@ def afficher_carte():
         </div>
     """, height=650)
 
-    st.markdown("<div style='margin-top: -20px;'>Vous pouvez modifier la carte et rajouter des points! Pour ajouter des photos dans vos descriptions, déposez vos photos ci-dessous et copiez le lien entre deux doubles accolades {{ lien à insérer }}</div>", unsafe_allow_html=True)
     uploader_image()
 
     st.write("By Edouard Azoulay")
