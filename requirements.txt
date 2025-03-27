@@ -2,3 +2,4 @@ streamlit
 streamlit_javascript
 streamlit_js_eval
 requests
+cloudinary
