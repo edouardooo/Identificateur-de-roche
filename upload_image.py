@@ -32,6 +32,8 @@ def uploader_image():
             # Récupérer l'URL de l'image
             image_url = response['secure_url']
             st.write(f"{{{{{image_url}}}}}")  # Affichage dans le format demandé
+            
+            # Ajout du bouton pour copier le lien
             copy_button = st.button('Copier le lien')
             
             if copy_button:
@@ -45,11 +47,6 @@ def uploader_image():
                     console.error('Erreur lors de la copie dans le presse-papiers: ', err);
                 }});
                 """)
-    
-        st.success("Image uploadée avec succès !")
-    else:
-        st.warning("Veuillez télécharger une image.")
-
     
         st.success("Image uploadée avec succès !")
     else:
