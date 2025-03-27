@@ -5,22 +5,14 @@ CLIENT_ID = "00c6d0342204835"  # Remplace par ta vraie clé Imgur
 
 def uploader_image():
     uploaded_file = st.file_uploader("Choisissez une image", type=["jpg", "jpeg", "png"])
-    camera_photo = st.camera_input("Ou prenez une photo")
 
-    image = uploaded_file if uploaded_file else camera_photo
-
-    if image:
-        st.image(image, caption="Image sélectionnée", use_container_width=True)
+    if uploaded_file:
+        st.image(uploaded_file, caption="Image sélectionnée", use_container_width=True)
 
         # Envoi à Imgur
         st.write("Envoi en cours...")
         headers = {"Authorization": f"Client-ID {CLIENT_ID}"}
-
-        # Gérer les fichiers différemment selon leur source
-        if uploaded_file:
-            files = {"image": uploaded_file.getvalue()}
-        else:  # Cas où l'image vient de la caméra
-            files = {"image": camera_photo.getvalue()}
+        files = {"image": uploaded_file.getvalue()}
 
         response = requests.post("https://api.imgur.com/3/upload", headers=headers, files=files)
 
