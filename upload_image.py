@@ -31,7 +31,7 @@ def uploader_image():
         
         with col2:
             st.subheader("Voici le lien direct de votre image:")
-            st.write(f"**Lien direct:** {{ {st.session_state.image_url} }}")
+            st.markdown(f"**Lien direct:** {{ {st.session_state.image_url} }}")
             
             # Composant HTML avec un bouton stylisé pour copier le lien
             html_code = f"""
@@ -49,31 +49,23 @@ def uploader_image():
                 cursor: pointer;
                 border-radius: 4px;
             }}
-            .copy-input {{
-                width: 80%;
-                padding: 5px;
-                font-size: 14px;
-            }}
             </style>
-            <input type="text" value="{{ {st.session_state.image_url} }}" id="myInput" class="copy-input" readonly>
             <button class="copy-btn" onclick="copyText()">Copier le lien</button>
             <script>
             function copyText() {{
-                var copyText = document.getElementById("myInput");
-                copyText.select();
-                copyText.setSelectionRange(0, 99999);
-                document.execCommand("copy");
-                alert("Lien copié : " + copyText.value);
+                var copyText = "{st.session_state.image_url}";
+                navigator.clipboard.writeText(copyText);
+                alert("Lien copié : " + copyText);
             }}
             </script>
             """
-            components.html(html_code, height=120)
+            components.html(html_code, height=100)
         
         st.success("Image uploadée avec succès !")
     elif st.session_state.image_url:
         st.image(st.session_state.image_url, caption="Image précédente", width=150)
         st.subheader("Voici le lien direct de votre image:")
-        st.write(f"**Lien direct:** {{ {st.session_state.image_url} }}")
+        st.markdown(f"**Lien direct:** {{ {st.session_state.image_url} }}")
         
         html_code = f"""
         <style>
@@ -90,26 +82,17 @@ def uploader_image():
             cursor: pointer;
             border-radius: 4px;
         }}
-        .copy-input {{
-            width: 80%;
-            padding: 5px;
-            font-size: 14px;
-        }}
         </style>
-        <input type="text" value="{{ {st.session_state.image_url} }}" id="myInput" class="copy-input" readonly>
         <button class="copy-btn" onclick="copyText()">Copier le lien</button>
         <script>
         function copyText() {{
-            var copyText = document.getElementById("myInput");
-            copyText.select();
-            copyText.setSelectionRange(0, 99999);
-            document.execCommand("copy");
-            alert("Lien copié : " + copyText.value);
+            var copyText = "{st.session_state.image_url}";
+            navigator.clipboard.writeText(copyText);
+            alert("Lien copié : " + copyText);
         }}
         </script>
         """
-        components.html(html_code, height=120)
+        components.html(html_code, height=100)
     else:
         st.warning("Veuillez télécharger une image.")
-
 
