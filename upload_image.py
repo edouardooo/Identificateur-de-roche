@@ -30,7 +30,7 @@ def uploader_image():
             
             # Récupérer l'URL de l'image
             image_url = response['secure_url']
-            st.write(f"{{{{ {image_url} }}}}")  # Affichage dans le format demandé
+            st.write(f"{{{{{image_url}}}}}")  # Affichage dans le format demandé
         
         st.success("Image uploadée avec succès !")
     else:
