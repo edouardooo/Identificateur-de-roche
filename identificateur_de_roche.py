@@ -2,6 +2,7 @@ import streamlit as st
 from streamlit_javascript import st_javascript
 from fonction_d_identification import identificationsedimentaire,identificationmagmatique,identificationmetamorphique
 from dictionnaire import afficher_dico
+from upload_image import uploader_image
 global roche
 roche = []
 
@@ -27,7 +28,7 @@ def afficher_carte():
     """, height=650)
     st.write("By Edouard Azoulay")
 
-    from upload_image import uploader_image
+    
     st.subheader("Uploader une photo sur Imgur")
     uploader_image()
 
