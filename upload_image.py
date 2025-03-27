@@ -15,7 +15,12 @@ def uploader_image():
         # Envoi à Imgur
         st.write("Envoi en cours...")
         headers = {"Authorization": f"Client-ID {CLIENT_ID}"}
-        files = {"image": image.getvalue()}
+
+        # Gérer les fichiers différemment selon leur source
+        if uploaded_file:
+            files = {"image": uploaded_file.getvalue()}
+        else:  # Cas où l'image vient de la caméra
+            files = {"image": camera_photo.getvalue()}
 
         response = requests.post("https://api.imgur.com/3/upload", headers=headers, files=files)
 
