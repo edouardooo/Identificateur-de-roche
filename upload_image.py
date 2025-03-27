@@ -31,7 +31,7 @@ def uploader_image():
         
         with col2:
             st.subheader("Voici le lien direct de votre image:")
-            st.markdown(f"**Lien direct:** {{ {st.session_state.image_url} }}")
+            st.markdown(f"**Lien direct:** {{{{{st.session_state.image_url} }}}}")
             
             # Composant HTML avec un bouton stylisé pour copier le lien
             html_code = f"""
