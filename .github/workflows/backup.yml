@@ -1,27 +1,31 @@
-name: Backup automatique Umap
+name: Backup Umap
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # Exécuter tous les jours à minuit
-  workflow_dispatch:  # Permet de déclencher manuellement si besoin
+    - cron: '0 0 * * *'  # exécute tous les jours à minuit
+  workflow_dispatch:
 
 jobs:
   backup:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v3
 
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       with:
-        python-version: '3.x'
+        python-version: 3.8  # ou la version de Python que tu utilises
 
+    - name: Configure Git
+      run: |
+        git config --global user.name "edouardooo"
+        git config --global user.email "edouardazoulay@orange.fr"
+    
     - name: Install dependencies
       run: |
-        pip install requests
-
+        pip install requests  # ou les autres dépendances nécessaires
+    
     - name: Run backup script
-      run: |
-        python3 backup.py  # Assure-toi que le nom du script correspond
+      run: python3 backup.py
