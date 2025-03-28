@@ -1,9 +1,9 @@
 import requests
-from datetime import datetime
+from datetime import datetime, timedelta
 import os
 import subprocess
 
-# URL de ta carte en JSON (change bien l'id)
+# URL de ta carte en JSON
 umap_url = "https://umap.openstreetmap.fr/fr/map/1135136.geojson"
 
 # Dossier backup
@@ -21,7 +21,17 @@ if response.status_code == 200:
         f.write(response.text)
     print("✔ Backup enregistré :", backup_path)
 
-    # Commit git auto (optionnel)
+    # Nettoyer les backups plus vieux que 30 jours
+    now = datetime.now()
+    for filename in os.listdir(backup_dir):
+        file_path = os.path.join(backup_dir, filename)
+        if os.path.isfile(file_path):
+            file_time = datetime.strptime(filename.split('.')[0], "%Y-%m-%d-%Hh%M")
+            if now - file_time > timedelta(days=30):  # Supprimer les fichiers plus vieux que 30 jours
+                os.remove(file_path)
+                print(f"✔ Fichier supprimé : {file_path}")
+
+    # Commit git auto
     subprocess.run(["git", "add", backup_path])
     subprocess.run(["git", "commit", "-m", f"Backup automatique {date_str}"])
     subprocess.run(["git", "push"])
