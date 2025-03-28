@@ -1,0 +1,27 @@
+name: Backup automatique Umap
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Exécuter tous les jours à minuit
+  workflow_dispatch:  # Permet de déclencher manuellement si besoin
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        pip install requests
+
+    - name: Run backup script
+      run: |
+        python3 backup.py  # Assure-toi que le nom du script correspond
