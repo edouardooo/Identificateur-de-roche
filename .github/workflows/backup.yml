@@ -1,4 +1,4 @@
-name: Backup Umap
+name: Backup la carte des kayous Umap
 
 on:
   schedule:
@@ -16,18 +16,18 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: 3.8  # Ou la version de Python que tu utilises
+        python-version: 3.8
 
     - name: Configure Git
       run: |
         git config --global user.name "edouardooo"
         git config --global user.email "edouardazoulay@orange.fr"
       env:
-        GITHUB_TOKEN: ${{ secrets.BackupSecret }}  # Utilisation du secret BackupSecret pour l'authentification
+        GITHUB_TOKEN: ${{ secrets.BACKUPSECRET }}  # Utilisation du secret BACKUPSECRET
 
     - name: Install dependencies
       run: |
         pip install requests  # Installe les dépendances nécessaires
-    
+
     - name: Run backup script
       run: python3 backup.py
