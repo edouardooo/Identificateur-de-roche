@@ -4,7 +4,7 @@ import os
 import subprocess
 
 # URL de ta carte en JSON
-umap_url = "https://umap.openstreetmap.fr/fr/map/1135136.geojson"
+umap_url = "https://umap.openstreetmap.fr/map/1135136/download/"
 
 # Dossier backup
 backup_dir = "backups"
