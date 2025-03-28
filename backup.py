@@ -32,7 +32,7 @@ if response.status_code == 200:
         subprocess.run(["git", "commit", "-m", commit_msg], check=True)
         
         # Utiliser le token pour le push
-        token = os.environ.get("GITHUB_TOKEN")
+        token = os.environ.get("BACKUPSECRET")
         if token is None:
             raise Exception("Le token GitHub n'est pas défini dans l'environnement.")
         
