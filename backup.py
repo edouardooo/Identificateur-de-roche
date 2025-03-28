@@ -1,8 +1,7 @@
 import os
 import requests
-from datetime import datetime, timedelta
+from datetime import datetime
 import subprocess
-import shutil
 
 # URL pour télécharger la carte en format .geojson
 umap_url = "https://umap.openstreetmap.fr/map/1135136/download/"
@@ -31,29 +30,11 @@ if response.status_code == 200:
         commit_msg = f"Backup automatique {date_str}"
         subprocess.run(["git", "commit", "-m", commit_msg], check=True)
         
-        # Utiliser le token pour le push
-        token = os.environ.get("BACKUPSECRET")
-        if token is None:
-            raise Exception("Le token GitHub n'est pas défini dans l'environnement.")
-        
-        repo_url = f"https://{token}@github.com/edouardooo/Identificateur-de-roche.git"
-        subprocess.run(["git", "push", repo_url, "main"], check=True)
+        # Push vers GitHub
+        subprocess.run(["git", "push", "origin", "main"], check=True)  # Assure-toi que "main" est ton branche par défaut
         
         print(f"✔ Backup envoyé sur GitHub avec le message : {commit_msg}")
     except subprocess.CalledProcessError as e:
         print(f"❌ Erreur Git : {e}")
 else:
     print("❌ Erreur lors du téléchargement de la carte Umap.")
-
-# Nettoyage des anciens backups : garder les 30 derniers jours
-now = datetime.now()
-for filename in os.listdir(backup_dir):
-    file_path = os.path.join(backup_dir, filename)
-    if os.path.isfile(file_path):
-        try:
-            file_date = datetime.strptime(filename.split('.')[0], "%Y-%m-%d-%Hh%M")
-            if now - file_date > timedelta(days=30):
-                os.remove(file_path)
-                print(f"❌ Ancien fichier supprimé : {file_path}")
-        except Exception as e:
-            print(f"Erreur lors de la suppression du fichier {filename}: {e}")
