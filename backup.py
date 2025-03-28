@@ -1,39 +1,54 @@
-import requests
-from datetime import datetime, timedelta
 import os
+import requests
+from datetime import datetime
 import subprocess
+import shutil
 
-# URL de ta carte en JSON
+# URL pour télécharger la carte en format .geojson
 umap_url = "https://umap.openstreetmap.fr/map/1135136/download/"
 
-# Dossier backup
+# Dossier pour stocker les backups
 backup_dir = "backups"
 os.makedirs(backup_dir, exist_ok=True)
 
-# Nom du fichier
+# Nom du fichier basé sur la date et l'heure
 date_str = datetime.now().strftime("%Y-%m-%d-%Hh%M")
 backup_path = f"{backup_dir}/{date_str}.geojson"
 
-# Télécharger la carte
+# Télécharger le fichier .geojson
 response = requests.get(umap_url)
 if response.status_code == 200:
     with open(backup_path, "w", encoding="utf-8") as f:
         f.write(response.text)
-    print("✔ Backup enregistré :", backup_path)
+    print(f"✔ Backup enregistré dans : {backup_path}")
 
-    # Nettoyer les backups plus vieux que 30 jours
-    now = datetime.now()
-    for filename in os.listdir(backup_dir):
-        file_path = os.path.join(backup_dir, filename)
-        if os.path.isfile(file_path):
-            file_time = datetime.strptime(filename.split('.')[0], "%Y-%m-%d-%Hh%M")
-            if now - file_time > timedelta(days=30):  # Supprimer les fichiers plus vieux que 30 jours
-                os.remove(file_path)
-                print(f"✔ Fichier supprimé : {file_path}")
-
-    # Commit git auto
-    subprocess.run(["git", "add", backup_path])
-    subprocess.run(["git", "commit", "-m", f"Backup automatique {date_str}"])
-    subprocess.run(["git", "push"])
+    # Ajouter et commit dans GitHub
+    try:
+        # Ajouter les fichiers à Git
+        subprocess.run(["git", "add", backup_path], check=True)
+        
+        # Commit avec message
+        commit_msg = f"Backup automatique {date_str}"
+        subprocess.run(["git", "commit", "-m", commit_msg], check=True)
+        
+        # Push vers GitHub
+        subprocess.run(["git", "push", "origin", "main"], check=True)  # Assure-toi que "main" est ton branche par défaut
+        
+        print(f"✔ Backup envoyé sur GitHub avec le message : {commit_msg}")
+    except subprocess.CalledProcessError as e:
+        print(f"❌ Erreur Git : {e}")
 else:
-    print("❌ Erreur lors du téléchargement")
+    print("❌ Erreur lors du téléchargement de la carte Umap.")
+
+# Nettoyage des anciens backups : garder les 30 derniers jours
+# On va vérifier et supprimer les fichiers de plus de 30 jours dans le dossier backups
+
+# Obtenir la liste des fichiers dans backups/
+backup_files = [f for f in os.listdir(backup_dir) if os.path.isfile(os.path.join(backup_dir, f))]
+backup_files.sort(reverse=True)  # Trier les fichiers par date (du plus récent au plus ancien)
+
+# Supprimer les fichiers plus anciens que 30 jours
+for file in backup_files[30:]:  # Garder seulement les 30 plus récents
+    file_path = os.path.join(backup_dir, file)
+    os.remove(file_path)
+    print(f"❌ Ancien fichier supprimé : {file_path}")
