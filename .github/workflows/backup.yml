@@ -1,34 +1,33 @@
-name: Backup automatisé
+name: Backup Umap
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # Déclenche le backup tous les jours à minuit
+    - cron: '0 0 * * *'  # Exécute tous les jours à minuit
+  workflow_dispatch:  # Permet de lancer manuellement
 
 jobs:
   backup:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Setup Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.x'
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.8  # Ou la version de Python que tu utilises
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install requests
+    - name: Configure Git
+      run: |
+        git config --global user.name "edouardooo"
+        git config --global user.email "edouardazoulay@orange.fr"
+      env:
+        GITHUB_TOKEN: ${{ secrets.BackupSecret }}  # Utilisation du secret BackupSecret pour l'authentification
 
-      - name: Run backup script
-        run: python3 backup.py  # Exécute le script Python de backup
-
-      - name: Commit and push changes
-        run: |
-          git config --global user.name "Edouard Azoulay"
-          git config --global user.email "edouard.azoulay@example.com"
-          git add backups/
-          git commit -m "Backup automatique $(date +'%Y-%m-%d-%Hh%M')"
-          git push https://github.com/${{ secrets.GITHUB_ACTOR }}:${{ secrets.GH_TOKEN }}@github.com/edouardooo/Identificateur-de-roche.git
+    - name: Install dependencies
+      run: |
+        pip install requests  # Installe les dépendances nécessaires
+    
+    - name: Run backup script
+      run: python3 backup.py
