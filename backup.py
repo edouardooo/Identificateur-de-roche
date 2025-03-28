@@ -1,6 +1,6 @@
 import os
 import requests
-from datetime import datetime
+from datetime import datetime, timedelta
 import subprocess
 import shutil
 
@@ -31,8 +31,13 @@ if response.status_code == 200:
         commit_msg = f"Backup automatique {date_str}"
         subprocess.run(["git", "commit", "-m", commit_msg], check=True)
         
-        # Push vers GitHub
-        subprocess.run(["git", "push", "origin", "main"], check=True)  # Assure-toi que "main" est ton branche par défaut
+        # Utiliser le token pour le push
+        token = os.environ.get("GITHUB_TOKEN")
+        if token is None:
+            raise Exception("Le token GitHub n'est pas défini dans l'environnement.")
+        
+        repo_url = f"https://{token}@github.com/edouardooo/Identificateur-de-roche.git"
+        subprocess.run(["git", "push", repo_url, "main"], check=True)
         
         print(f"✔ Backup envoyé sur GitHub avec le message : {commit_msg}")
     except subprocess.CalledProcessError as e:
@@ -41,14 +46,14 @@ else:
     print("❌ Erreur lors du téléchargement de la carte Umap.")
 
 # Nettoyage des anciens backups : garder les 30 derniers jours
-# On va vérifier et supprimer les fichiers de plus de 30 jours dans le dossier backups
-
-# Obtenir la liste des fichiers dans backups/
-backup_files = [f for f in os.listdir(backup_dir) if os.path.isfile(os.path.join(backup_dir, f))]
-backup_files.sort(reverse=True)  # Trier les fichiers par date (du plus récent au plus ancien)
-
-# Supprimer les fichiers plus anciens que 30 jours
-for file in backup_files[30:]:  # Garder seulement les 30 plus récents
-    file_path = os.path.join(backup_dir, file)
-    os.remove(file_path)
-    print(f"❌ Ancien fichier supprimé : {file_path}")
+now = datetime.now()
+for filename in os.listdir(backup_dir):
+    file_path = os.path.join(backup_dir, filename)
+    if os.path.isfile(file_path):
+        try:
+            file_date = datetime.strptime(filename.split('.')[0], "%Y-%m-%d-%Hh%M")
+            if now - file_date > timedelta(days=30):
+                os.remove(file_path)
+                print(f"❌ Ancien fichier supprimé : {file_path}")
+        except Exception as e:
+            print(f"Erreur lors de la suppression du fichier {filename}: {e}")
