@@ -14,37 +14,43 @@ cloudinary.config(
 )
 
 def ajouter_filigrane(image_bytes, texte_filigrane):
+    """
+    Ajoute un filigrane en bas à gauche de l'image si 'texte_filigrane' n'est pas vide.
+    Renvoie un objet BytesIO contenant l'image modifiée en JPEG.
+    """
+    # Charger l'image et la convertir en RGBA pour gérer la transparence
     image = Image.open(io.BytesIO(image_bytes)).convert("RGBA")
-    filigrane = Image.new("RGBA", image.size, (255, 255, 255, 0))
-    draw = ImageDraw.Draw(filigrane)
+    # Créer un overlay transparent de la même taille que l'image
+    overlay = Image.new("RGBA", image.size, (0, 0, 0, 0))
+    draw = ImageDraw.Draw(overlay)
     
     try:
         font = ImageFont.truetype("arial.ttf", 24)
-    except Exception as e:
+    except Exception:
         font = ImageFont.load_default()
     
-    # Tenter d'obtenir la taille du texte avec textbbox, sinon fallback sur font.getmask
-    try:
-        bbox = draw.textbbox((0, 0), texte_filigrane, font=font)
-        text_width = bbox[2] - bbox[0]
-        text_height = bbox[3] - bbox[1]
-    except Exception as e:
+    if texte_filigrane.strip():
+        # Obtenir la taille du texte : essayer textbbox puis fallback sur textsize
         try:
-            text_width, text_height = font.getmask(texte_filigrane).size
-        except Exception as e:
-            text_height = 24  # Valeur par défaut
+            bbox = draw.textbbox((0, 0), texte_filigrane, font=font)
+            text_width = bbox[2] - bbox[0]
+            text_height = bbox[3] - bbox[1]
+        except Exception:
+            text_width, text_height = draw.textsize(texte_filigrane, font=font)
+        
+        # Positionner le texte 10 pixels du bord gauche et en bas avec une marge de 10 pixels
+        x = 10
+        y = image.height - text_height - 10
+        
+        # Dessiner le texte sur l'overlay avec transparence
+        draw.text((x, y), texte_filigrane, font=font, fill=(255, 255, 255, 180))
     
-    x = 10
-    y = image.height - text_height - 10
-    
-    draw.text((x, y), texte_filigrane, font=font, fill=(255, 255, 255, 180))
-    
-    image_finale = Image.alpha_composite(image, filigrane)
+    # Combiner l'image originale et l'overlay
+    image_finale = Image.alpha_composite(image, overlay)
     output = io.BytesIO()
     image_finale.convert("RGB").save(output, format="JPEG")
     output.seek(0)
     return output
-
 def uploader_image():
     if 'image_url' not in st.session_state:
         st.session_state.image_url = None
