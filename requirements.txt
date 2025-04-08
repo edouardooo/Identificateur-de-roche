@@ -3,4 +3,4 @@ streamlit_javascript
 streamlit_js_eval
 requests
 cloudinary
-Pillow
+Pillow>=8.0.0
