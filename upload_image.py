@@ -23,8 +23,11 @@ def ajouter_filigrane(image_bytes, texte_filigrane):
     except:
         font = ImageFont.load_default()
 
-    # Obtenir la taille du texte avec draw.textsize()
-    text_width, text_height = draw.textsize(texte_filigrane, font=font)
+    # Utiliser textbbox pour obtenir les dimensions du texte
+    bbox = draw.textbbox((0, 0), texte_filigrane, font=font)
+    text_width = bbox[2] - bbox[0]
+    text_height = bbox[3] - bbox[1]
+
     x = 10
     y = image.height - text_height - 10
 
@@ -35,6 +38,7 @@ def ajouter_filigrane(image_bytes, texte_filigrane):
     image_finale.convert("RGB").save(output, format="JPEG")
     output.seek(0)
     return output
+
 
 
 def uploader_image():
