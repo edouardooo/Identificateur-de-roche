@@ -20,22 +20,24 @@ def ajouter_filigrane(image_bytes, texte_filigrane):
     
     try:
         font = ImageFont.truetype("arial.ttf", 24)
-    except IOError:
+    except Exception as e:
         font = ImageFont.load_default()
     
-    # Tenter d'obtenir la taille du texte avec textbbox, sinon utiliser font.getmask
+    # Tenter d'obtenir la taille du texte avec textbbox
     try:
         bbox = draw.textbbox((0, 0), texte_filigrane, font=font)
         text_width = bbox[2] - bbox[0]
         text_height = bbox[3] - bbox[1]
-    except AttributeError:
-        text_width, text_height = font.getmask(texte_filigrane).size
-
+    except Exception as e:
+        # En cas d'erreur, on affiche un message dans Streamlit (optionnel) et on fixe la hauteur par défaut
+        st.error("Erreur pour obtenir la taille du texte : " + str(e))
+        text_height = 24  # Hauteur par défaut
+    
     x = 10
     y = image.height - text_height - 10
-
+    
     draw.text((x, y), texte_filigrane, font=font, fill=(255, 255, 255, 180))
-
+    
     image_finale = Image.alpha_composite(image, filigrane)
     output = io.BytesIO()
     image_finale.convert("RGB").save(output, format="JPEG")
