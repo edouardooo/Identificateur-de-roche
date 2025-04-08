@@ -23,8 +23,11 @@ def ajouter_filigrane(image_bytes, texte_filigrane):
     except:
         font = ImageFont.load_default()
 
+    # Obtenir la taille du texte avec draw.textsize()
+    text_width, text_height = draw.textsize(texte_filigrane, font=font)
     x = 10
-    y = image.height - font.getsize(texte_filigrane)[1] - 10
+    y = image.height - text_height - 10
+
     draw.text((x, y), texte_filigrane, font=font, fill=(255, 255, 255, 180))
 
     image_finale = Image.alpha_composite(image, filigrane)
@@ -32,6 +35,7 @@ def ajouter_filigrane(image_bytes, texte_filigrane):
     image_finale.convert("RGB").save(output, format="JPEG")
     output.seek(0)
     return output
+
 
 def uploader_image():
     if 'image_url' not in st.session_state:
