@@ -23,15 +23,16 @@ def ajouter_filigrane(image_bytes, texte_filigrane):
     except Exception as e:
         font = ImageFont.load_default()
     
-    # Tenter d'obtenir la taille du texte avec textbbox
+    # Tenter d'obtenir la taille du texte avec textbbox, sinon fallback sur font.getmask
     try:
         bbox = draw.textbbox((0, 0), texte_filigrane, font=font)
         text_width = bbox[2] - bbox[0]
         text_height = bbox[3] - bbox[1]
     except Exception as e:
-        # En cas d'erreur, on affiche un message dans Streamlit (optionnel) et on fixe la hauteur par défaut
-        st.error("Erreur pour obtenir la taille du texte : " + str(e))
-        text_height = 24  # Hauteur par défaut
+        try:
+            text_width, text_height = font.getmask(texte_filigrane).size
+        except Exception as e:
+            text_height = 24  # Valeur par défaut
     
     x = 10
     y = image.height - text_height - 10
@@ -44,22 +45,21 @@ def ajouter_filigrane(image_bytes, texte_filigrane):
     output.seek(0)
     return output
 
-
-
-
 def uploader_image():
     if 'image_url' not in st.session_state:
         st.session_state.image_url = None
 
     st.title("Uploader une image avec ou sans signature")
-    texte_filigrane = st.text_input("Entrez votre nom ou signature (optionnel)")
+    
+    # Valeur par défaut vide pour permettre à l'utilisateur de ne pas ajouter de signature
+    texte_filigrane = st.text_input("Entrez votre nom ou signature (optionnel)", value="")
 
     uploaded_file = st.file_uploader("Choisissez une image", type=["jpg", "jpeg", "png"])
 
     if uploaded_file:
         image_bytes = uploaded_file.read()
 
-        # Ajout du filigrane seulement si texte fourni
+        # Ajout du filigrane seulement si un texte est bien renseigné
         if texte_filigrane.strip():
             image_a_uploader = ajouter_filigrane(image_bytes, texte_filigrane.strip())
         else:
@@ -109,3 +109,6 @@ def uploader_image():
 
     else:
         st.warning("Veuillez télécharger une image.")
+
+if __name__ == "__main__":
+    uploader_image()
