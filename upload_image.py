@@ -17,16 +17,19 @@ def ajouter_filigrane(image_bytes, texte_filigrane):
     image = Image.open(io.BytesIO(image_bytes)).convert("RGBA")
     filigrane = Image.new("RGBA", image.size, (255, 255, 255, 0))
     draw = ImageDraw.Draw(filigrane)
-
+    
     try:
         font = ImageFont.truetype("arial.ttf", 24)
-    except:
+    except IOError:
         font = ImageFont.load_default()
-
-    # Utiliser textbbox pour obtenir les dimensions du texte
-    bbox = draw.textbbox((0, 0), texte_filigrane, font=font)
-    text_width = bbox[2] - bbox[0]
-    text_height = bbox[3] - bbox[1]
+    
+    # Tenter d'obtenir la taille du texte avec textbbox, sinon utiliser font.getmask
+    try:
+        bbox = draw.textbbox((0, 0), texte_filigrane, font=font)
+        text_width = bbox[2] - bbox[0]
+        text_height = bbox[3] - bbox[1]
+    except AttributeError:
+        text_width, text_height = font.getmask(texte_filigrane).size
 
     x = 10
     y = image.height - text_height - 10
@@ -38,6 +41,7 @@ def ajouter_filigrane(image_bytes, texte_filigrane):
     image_finale.convert("RGB").save(output, format="JPEG")
     output.seek(0)
     return output
+
 
 
 
