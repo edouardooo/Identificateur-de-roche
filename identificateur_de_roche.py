@@ -4,6 +4,7 @@ from fonction_d_identification import identificationsedimentaire,identificationm
 from dictionnaire import afficher_dico, sugestions_dico
 from upload_image import uploader_image
 global roche
+from pyairtable import Table
 roche = []
 
 API_TOKEN = st.secrets["airtable_token"]
@@ -87,7 +88,8 @@ def main():
     if menu == "Objectif":
         afficher_objectif()
     if menu=="Dictionnaire":
-       afficher_dico()
+       afficher_dico(table)
+       sugestions_dico(table)
     
     
 if __name__ == "__main__":
