@@ -1,10 +1,16 @@
 import streamlit as st
 from streamlit_javascript import st_javascript
 from fonction_d_identification import identificationsedimentaire,identificationmagmatique,identificationmetamorphique
-from dictionnaire import afficher_dico
+from dictionnaire import afficher_dico, sugestions_dico
 from upload_image import uploader_image
 global roche
 roche = []
+
+API_TOKEN = st.secrets["airtable_token"]
+BASE_ID = st.secrets["base_id"]
+TABLE_NAME = st.secrets["table_name"]
+
+table = Table(API_TOKEN, BASE_ID, TABLE_NAME)
 
 def afficher_carte():
     st.header("La carte des kayous")
