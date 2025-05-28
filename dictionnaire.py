@@ -8,8 +8,8 @@ def afficher_dico():
    
 
    # Config Airtable
-   API_KEY = "ta_api_key"
-   BASE_ID = "ta_base_id"
+   API_KEY = "patP8qx7lbIPOm0DJ.dbe226cbd977fa134d15badd3597c6d42096b3faea1371d13a3fecdb7aa7b866"
+   BASE_ID = "app6ztQ6oRakoPKJv"
    TABLE_NAME = "Termes"
    table = Table(API_KEY, BASE_ID, TABLE_NAME)
 
