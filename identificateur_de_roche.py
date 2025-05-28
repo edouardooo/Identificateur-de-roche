@@ -4,7 +4,7 @@ from fonction_d_identification import identificationsedimentaire,identificationm
 from dictionnaire import afficher_dico, sugestions_dico
 from upload_image import uploader_image
 global roche
-from pyairtable.table import Table
+from pyairtable import Table
 
 roche = []
 
