@@ -4,6 +4,8 @@ from pyairtable import Table
 
 def afficher_dico(table):
     st.title("📘 Dictionnaire des termes géologiques")
+
+    table = Table(API_TOKEN, BASE_ID, TABLE_NAME)
     records = table.all(formula="IF({validé}, TRUE(), FALSE())")
 
     # Construction de la liste des entrées
@@ -44,6 +46,8 @@ def afficher_dico(table):
 
 
 def sugestions_dico(table):
+    table = Table(API_TOKEN, BASE_ID, TABLE_NAME)
+    
     st.title("✍️ Proposer un terme géologique")
 
     with st.form("proposition_terme"):
@@ -74,6 +78,3 @@ BASE_ID = st.secrets["base_id"]
 TABLE_NAME = st.secrets["table_name"]
 table = Table(API_TOKEN, BASE_ID, TABLE_NAME)
 
-# Affichage Streamlit
-afficher_dico(table)
-sugestions_dico(table)
