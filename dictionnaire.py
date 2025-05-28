@@ -8,9 +8,10 @@ def afficher_dico():
    
 
    # Config Airtable
-   API_KEY = "patP8qx7lbIPOm0DJ.dbe226cbd977fa134d15badd3597c6d42096b3faea1371d13a3fecdb7aa7b866"
-   BASE_ID = "app6ztQ6oRakoPKJv"
-   TABLE_NAME = "Termes"
+   API_TOKEN = st.secrets["airtable_token"]
+   BASE_ID = st.secrets["base_id"]
+   TABLE_NAME = st.secrets["table_name"]
+
    table = Table(API_KEY, BASE_ID, TABLE_NAME)
 
    st.title("Proposer un terme géologique")
