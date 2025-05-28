@@ -3,4 +3,5 @@ streamlit_javascript
 streamlit_js_eval
 requests
 cloudinary
+pyairtable
 Pillow>=8.0.0
