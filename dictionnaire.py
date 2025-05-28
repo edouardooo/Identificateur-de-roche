@@ -5,8 +5,50 @@ from pyairtable import Table
 
 def afficher_dico():
    st.title("Dictionnaire des termes géologiques")
-   
+   records = table.all(formula="IF({validé}, TRUE(), FALSE())")
 
+   # Construction de la liste des entrées
+   termes = []
+   for rec in records:
+       fields = rec["fields"]
+       if "terme" in fields and "définition" in fields:
+           termes.append({
+               "terme": fields["terme"],
+               "definition": fields["définition"]
+           })
+
+   # Tri alphabétique
+   termes.sort(key=lambda x: x["terme"].lower())
+
+   # Barre de recherche
+   search = st.text_input("🔍 Rechercher un terme").strip().lower()
+
+   # Navigation par lettre
+   lettres = sorted({t["terme"][0].upper() for t in termes if t["terme"]})
+   lettre_sel = st.selectbox("🔠 Filtrer par lettre", options=["Toutes"] + lettres)
+
+   # Filtrage
+   filtrés = [
+       t for t in termes
+       if (search in t["terme"].lower())
+       and (lettre_sel == "Toutes" or t["terme"].upper().startswith(lettre_sel))
+   ]
+
+   # Affichage
+   if not filtrés:
+       st.info("Aucun terme trouvé.")
+   else:
+       for t in filtrés:
+           st.markdown(f"### {t['terme']}")
+           st.markdown(t["definition"])
+           st.markdown("---")
+   
+   sugestions_dico()
+
+
+
+def sugestions_dico():
+   
    # Config Airtable
    API_TOKEN = st.secrets["airtable_token"]
    BASE_ID = st.secrets["base_id"]
