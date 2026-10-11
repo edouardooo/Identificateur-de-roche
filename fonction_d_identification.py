@@ -1,121 +1,216 @@
+import urllib.parse
+
 import streamlit as st
+
+# Résultat affiché quand aucune roche de la clé ne correspond aux réponses
+NON_IDENTIFIEE = "non identifiée"
+
+# Recherche à lancer sur la lithothèque de l'ENS de Lyon pour chaque roche
+# (une recherche renvoie la liste de leurs échantillons, avec photos).
+# Les roches absentes de ce dictionnaire n'ont pas d'échantillon sur leur site.
+RECHERCHES_LITHOTHEQUE = {
+    "tourbe": "tourbe",
+    "houille": "charbon",
+    "brèche": "breche",
+    "poudingue": "poudingue",
+    "sable": "sable",
+    "grès": "gres",
+    "arkose": "arkose",
+    "argilite": "argilite",
+    "siltite": "siltite",
+    "argile ou silt": "argile",
+    "calcaire": "calcaire",
+    "craie": "craie",
+    "marne": "marne",
+    "dolomie": "dolomie",
+    "radiolarite": "radiolarite",
+    "silex": "silex",
+    "diatomite": "diatomite",
+    "halite": "halite",
+    "sylvite": "sylvite",
+    "gypse en fer de lance": "gypse",
+    "gypse saccharoïde": "gypse",
+    "bauxite": "bauxite",
+    "obsidienne": "obsidienne",
+    "ponce": "ponce",
+    "rhyolite": "rhyolite",
+    "trachyte": "trachyte",
+    "andésite": "andesite",
+    "basalte": "basalte",
+    "granite": "granite",
+    "granodiorite": "granodiorite",
+    "diorite": "diorite",
+    "gabbro": "gabbro",
+    "péridotite": "peridotite",
+    "marbre": "marbre",
+    "éclogite": "eclogite",
+    "migmatite": "migmatite",
+    "micaschiste": "micaschiste",
+    "gneiss": "gneiss",
+    "schiste bleu": "schiste bleu",
+    "amphibolite": "amphibolite",
+    "quartzite": "quartzite",
+    "cornéenne": "corneenne",
+}
+
+
+def lien_lithotheque(nom_roche):
+    """Lien vers les échantillons de cette roche sur la lithothèque ENS de Lyon, ou None."""
+    recherche = RECHERCHES_LITHOTHEQUE.get(nom_roche)
+    if recherche is None:
+        return None
+    return ("https://lithotheque.ens-lyon.fr/Lithotheque/FormRech/cindex.php?Type="
+            + urllib.parse.quote(recherche))
+
+
+def question(roche, texte):
+    """Pose une question oui/non. Arrête la page tant que l'utilisateur n'a pas répondu.
+
+    La clé du bouton contient le chemin déjà parcouru : deux questions identiques
+    dans deux branches différentes de la clé ne partagent donc pas leur réponse."""
+    reponse = st.radio(texte, ["oui", "non"], index=None, horizontal=True,
+                       key=" > ".join(roche) + " | " + texte)
+    if reponse is None:
+        st.stop()
+    return reponse == "oui"
+
+
 def identificationsedimentaire(roche):
-    if st.radio("La roche est-elle marron foncé ou noire ?", ["oui", "non"]) == "oui":
+    if question(roche, "La roche est-elle noire ou brun foncé, légère, d'aspect charbonneux ou faite de débris végétaux ?"):
         roche.append("carbonée")
-        if st.radio("La roche présente-t-elle des fragments de végétaux ?", ["oui", "non"]) == "oui":
-            roche.append("tourbe")
-        elif st.radio("La roche est-elle liquide ?", ["oui", "non"]) == "oui":
+        if question(roche, "Est-ce un liquide noir, visqueux et odorant ?"):
             roche.append("pétrole")
-        elif st.radio("La roche tache-t-elle les doigts ?", ["oui", "non"]) == "oui":
+        elif question(roche, "Voit-on des débris végétaux peu transformés (mousses, fibres) ? La roche est-elle légère et spongieuse ?"):
+            roche.append("tourbe")
+        elif question(roche, "La roche est-elle brune et mate, avec parfois des restes de bois reconnaissables ?"):
+            roche.append("lignite")
+        elif question(roche, "La roche est-elle noire et tache-t-elle les doigts ?"):
             roche.append("houille")
         else:
-            roche.append("lignite")
-    elif st.radio("La roche ne présente pas d'éléments figurés ou ils sont issus d'êtres vivants ?", ["oui", "non"]) == "oui":
-        if st.radio("La roche fait-elle effervescence à l'acide ?", ["oui", "non"]) == "oui":
-            roche.append("calcaire")
-        elif st.radio("La roche raye-t-elle le verre ?", ["oui", "non"]) == "oui":
-            roche.append("biogène siliceuse")
-            if st.radio("La roche est-elle couleur lie de vin ?", ["oui", "non"]) == "oui":
-                roche.append("radiolarite")
-            else:
-                roche.append("diatomite")
-        else:
-            roche.append("évaporitique")
-            if st.radio("La roche est-elle rayable à l'ongle ?", ["oui", "non"]) == "oui":
-                roche.append("gypse")
-                if st.radio("La roche a-t-elle une forme de pointe de lance ?", ["oui", "non"]) == "oui":
-                    roche.append("Gypse fer de lance")
-                else:
-                    roche.append("Gypse saccharoïde")
-            else:
-                if st.radio("La roche est-elle orange ?", ["oui", "non"]) == "oui":
-                    roche.append("sylvite KCl")
-                else:
-                    roche.append("halite NaCl")
-    elif st.radio("La roche présente-t-elle des éléments figurés non issus d'êtres vivants ?", ["oui", "non"]) == "oui":
+            roche.append("anthracite")
+    elif question(roche, "Voit-on à l'œil nu des grains ou des fragments (sable, graviers, galets) arrachés à d'autres roches ?"):
         roche.append("détritique")
-        if st.radio("La taille des grains est-elle supérieure à 2mm ?", ["oui", "non"]) == "oui":
+        if question(roche, "Les éléments sont-ils plus gros que 2 mm (graviers, galets, blocs) ?"):
             roche.append("rudite")
-            if st.radio("La roche est-elle meuble ?", ["oui", "non"]) == "oui":
-                roche.append("blocs ou galets ou cailloutis")
+            if question(roche, "La roche est-elle meuble (les éléments ne sont pas soudés entre eux) ?"):
+                roche.append("galets et graviers")
+            elif question(roche, "Les éléments sont-ils anguleux ?"):
+                roche.append("brèche")
             else:
-                roche.append("conglomérat")
-                if st.radio("La roche présente-t-elle des éléments anguleux ?", ["oui", "non"]) == "oui":
-                    roche.append("brèche")
-                else:
-                    roche.append("poudingue")
-        elif st.radio("La taille des éléments figurés est-elle entre 63μm et 2mm ?", ["oui", "non"]) == "oui":
-            roche.append("arénite")
-            if st.radio("La roche est-elle meuble ?", ["oui", "non"]) == "oui":
-                roche.append("sable")
-            else:
-                if st.radio("La roche est-elle essentiellement faite de quartz et raye le verre ?", ["oui", "non"]) == "oui":
-                    roche.append("grès")
-                else:
-                    roche.append("arkose")
+                roche.append("poudingue")
         else:
-            roche.append("lutite")
-            if st.radio("La roche est-elle meuble ?", ["oui", "non"]) == "oui":
-                roche.append("silts ou argiles")
+            roche.append("arénite")
+            if question(roche, "La roche est-elle meuble (les grains ne sont pas soudés entre eux) ?"):
+                roche.append("sable")
+            elif question(roche, "Voit-on de nombreux grains de feldspath (blancs ou roses, opaques, à faces planes) en plus du quartz ?"):
+                roche.append("arkose")
             else:
-                if st.radio("La roche happe-t-elle la langue ?", ["oui", "non"]) == "oui":
-                    if st.radio("La roche fait-elle effervescence à l'acide ?", ["oui", "non"]) == "oui":
-                        roche.append("marne")
-                    else:
-                        roche.append("pélite (argiles consolidés)")
-                else:
-                    roche.append("silite")
-    else:
+                roche.append("grès")
+    elif question(roche, "La roche fait-elle effervescence (elle mousse) à froid avec de l'acide chlorhydrique dilué ?"):
+        roche.append("carbonatée")
+        if question(roche, "La roche sent-elle la terre mouillée quand on souffle dessus, et l'acide laisse-t-il une trace boueuse d'argile ?"):
+            roche.append("marne")
+        elif question(roche, "La roche est-elle blanche, tendre, légère, et tache-t-elle les doigts comme une craie de tableau ?"):
+            roche.append("craie")
+        else:
+            roche.append("calcaire")
+    elif question(roche, "La roche fait-elle effervescence seulement à chaud, ou une fois réduite en poudre ?"):
+        roche.append("carbonatée")
+        roche.append("dolomie")
+    elif question(roche, "La roche raye-t-elle le verre (roche très dure, à grain très fin, sans grains visibles) ?"):
+        roche.append("biogène siliceuse")
+        if question(roche, "La roche est-elle rouge lie-de-vin, souvent en bancs fins ?"):
+            roche.append("radiolarite")
+        else:
+            roche.append("silex")
+    elif question(roche, "La roche a-t-elle un goût salé ou amer quand on la goûte (elle se dissout dans l'eau) ?"):
+        roche.append("évaporitique")
+        if question(roche, "Le goût est-il simplement salé, comme le sel de cuisine ?"):
+            roche.append("halite")
+        else:
+            roche.append("sylvite")
+    elif question(roche, "La roche est-elle blanche, très légère (elle peut flotter), poreuse et friable ?"):
+        roche.append("biogène siliceuse")
+        roche.append("diatomite")
+    elif question(roche, "La roche est-elle faite de cristaux (brillants, translucides ou en grains de sucre) si tendres qu'ils se rayent à l'ongle ?"):
+        roche.append("évaporitique")
+        roche.append("gypse")
+        if question(roche, "Est-ce un cristal en forme de fer de lance (deux cristaux accolés en V) ?"):
+            roche.append("gypse en fer de lance")
+        else:
+            roche.append("gypse saccharoïde")
+    elif question(roche, "La roche est-elle à grain très fin (grains invisibles à l'œil nu), d'aspect terreux, et sent-elle la terre mouillée quand on souffle dessus ?"):
+        roche.append("détritique")
+        roche.append("lutite")
+        if question(roche, "La roche est-elle meuble, ou devient-elle pâteuse dans l'eau ?"):
+            roche.append("argile ou silt")
+        elif question(roche, "La roche crisse-t-elle sous la dent (on sent de tout petits grains) ?"):
+            roche.append("siltite")
+        else:
+            roche.append("argilite")
+    elif question(roche, "La roche est-elle rouge-brun à blanchâtre, souvent formée de petites billes (pisolithes) ?"):
         roche.append("résiduelle")
-        roche.append("beauxite")
+        roche.append("bauxite")
+    else:
+        roche.append(NON_IDENTIFIEE)
     return roche
 
+
 def identificationmagmatique(roche):
-    if st.radio("La roche est-elle grenue ? (Les minéraux sont visibles à l'œil nu, au moins sous forme de petits grains.)", ["oui", "non"]) == "non":
+    if not question(roche, "La roche est-elle entièrement formée de cristaux jointifs, tous visibles à l'œil nu (structure grenue), sans pâte fine ni verre ?"):
         roche.append("volcanique")
-        if st.radio("La roche contient-elle du quartz ? A-t-elle une couleur orange/rouge caractéristique?", ["oui", "non"]) == "oui":
+        if question(roche, "La roche a-t-elle l'aspect d'un verre (brillante, cassure conchoïdale coupante) ?"):
+            roche.append("obsidienne")
+        elif question(roche, "La roche est-elle très légère, criblée de bulles, au point de flotter sur l'eau ?"):
+            roche.append("ponce")
+        elif question(roche, "La roche est-elle claire (blanche, rose ou rouge) et contient-elle de petits cristaux de quartz ?"):
             roche.append("rhyolite")
+        elif question(roche, "La pâte est-elle claire (grise ou beige), rugueuse au toucher, avec des baguettes de feldspath potassique (sanidine, sans macles polysynthétiques) ?"):
+            roche.append("trachyte")
+        elif question(roche, "La roche est-elle grise, avec des cristaux de plagioclase blanc et d'amphibole ou de pyroxène noirs dans une pâte fine ?"):
+            roche.append("andésite")
         else:
-            if st.radio("La roche contient-elle des feldspath potassiques (pâte claire, pas de macles polysynthétiques) ?", ["oui", "non"]) == "oui":
-                roche.append("trachyte")
-            else:
-                if st.radio("Amphibole et biotite sont-ils fréquents ?", ["oui", "non"]) == "oui":
-                    roche.append("andésite")
-                else:
-                    if st.radio("La roche a-t-elle un aspect vitré (cassure conchoïdale) ?", ["oui", "non"]) == "oui":
-                        roche.append("obsidienne")
-                    else:
-                        roche.append("basalte")
+            roche.append("basalte")
     else:
         roche.append("plutonique")
-        if st.radio("La roche contient-elle du quartz (minéral qui ressemble à du gros sel et raye le verre) ?", ["oui", "non"]) == "oui":
-            if st.radio("Micas fréquents (voir micas blanc) et feldspath potassique majoritaires ?", ["oui", "non"]) == "oui":
+        if question(roche, "La roche contient-elle du quartz (minéral gris et translucide qui ressemble à du gros sel et raye le verre) ?"):
+            if question(roche, "Le feldspath potassique (souvent rose ou blanc laiteux, en grands cristaux) est-il abondant, accompagné de micas ?"):
                 roche.append("granite")
             else:
                 roche.append("granodiorite")
+        elif question(roche, "La roche est-elle essentiellement verte (olivine), très dense, sans feldspath blanc ?"):
+            roche.append("péridotite")
+        elif question(roche, "Les minéraux sombres sont-ils surtout des amphiboles (baguettes noires brillantes) mêlées à du plagioclase blanc, donnant un aspect « poivre et sel » ?"):
+            roche.append("diorite")
         else:
-            if st.radio("La roche contient-elle de l'olivine ?", ["oui", "non"]) == "oui":
-                roche.append("péridotite")
-            else:
-                roche.append("gabbro")
+            roche.append("gabbro")
     return roche
 
+
 def identificationmetamorphique(roche):
-    if st.radio("La roche a-t-elle une foliation très marquée ?", ["oui", "non"]) == "oui":
-        if st.radio("La roche contient-elle des lits sombres (micas) et des lits clairs (quartz et feldspath) ?", ["oui", "non"]) == "oui":
-            if st.radio("La roche est-elle très brillante, avec beaucoup de micas et peu de feldspaths ?", ["oui", "non"]) == "oui":
-                roche.append("micaschiste")
-            else:
-                roche.append("gneiss")
-        elif st.radio("La roche est-elle sombre et contient des amphiboles noires (hornblende) ?", ["oui", "non"]) == "oui":
+    if question(roche, "La roche fait-elle effervescence à l'acide chlorhydrique dilué ?"):
+        roche.append("marbre")
+    elif question(roche, "La roche contient-elle beaucoup de grenats rouges dans une masse de pyroxène vert (omphacite) ?"):
+        roche.append("éclogite")
+    elif question(roche, "La roche mélange-t-elle des zones foliées sombres et des zones grenues claires, comme un granite en train de se former ?"):
+        roche.append("migmatite")
+    elif question(roche, "La roche a-t-elle une foliation bien marquée (feuillets ou lits parallèles) ?"):
+        if question(roche, "La roche est-elle à grain très fin et se débite-t-elle en plaques fines et régulières ?"):
+            roche.append("ardoise")
+        elif question(roche, "La roche est-elle très brillante, avec beaucoup de micas et peu de feldspaths ?"):
+            roche.append("micaschiste")
+        elif question(roche, "Voit-on une alternance de lits sombres (micas) et de lits clairs (quartz et feldspaths) ?"):
+            roche.append("gneiss")
+        elif question(roche, "La roche a-t-elle une teinte bleutée (glaucophane), souvent avec des grenats rouges ou de l'épidote vert-jaune ?"):
+            roche.append("schiste bleu")
+        elif question(roche, "La roche est-elle sombre (vert-noir), faite surtout d'amphiboles noires (hornblende) et de plagioclase ?"):
             roche.append("amphibolite")
         else:
-            roche.append("schiste bleu")
+            roche.append(NON_IDENTIFIEE)
+    elif question(roche, "La roche est-elle claire et très dure (raye le verre), faite de grains de quartz soudés (la cassure traverse les grains) ?"):
+        roche.append("quartzite")
+    elif question(roche, "La roche est-elle sombre, très dure, à grain très fin, parfois avec des taches ou des baguettes de minéraux (andalousite) ?"):
+        roche.append("cornéenne")
     else:
-        if st.radio("La roche présente-t-elle une abondance de grenat et de pyroxènes verts ?", ["oui", "non"]) == "oui":
-            roche.append("éclogite")
-        elif st.radio("La roche présente-t-elle une foliation que sur une partie, le reste est grenu, avec un mélange leucocrate et mélanocrate ?", ["oui", "non"]) == "oui":
-            roche.append("migmatite")
-        else:
-            roche.append("cornéenne ou schiste tacheté")
+        roche.append(NON_IDENTIFIEE)
     return roche

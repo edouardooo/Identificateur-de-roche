@@ -1,7 +1,4 @@
-streamlit
-streamlit_javascript
-streamlit_js_eval
+streamlit==1.65.0
+pyairtable==3.5.0.post1
+cloudinary==1.46.3
 requests
-cloudinary
-pyairtable
-Pillow>=8.0.0

@@ -1,0 +1,12 @@
+# Environnement Python local
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Secrets : ne JAMAIS les mettre sur GitHub
+.streamlit/secrets.toml
+secrets.toml
+
+# Réglages locaux de Claude Code
+.claude/
