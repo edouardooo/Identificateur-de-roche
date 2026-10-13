@@ -2,13 +2,19 @@ from pathlib import Path
 
 import streamlit as st
 
+from administration import onglet_administration
 from dictionnaire import afficher_dico, definition_roche, sugestions_dico, table_airtable
 from fonction_d_identification import (NON_IDENTIFIEE, identificationmagmatique,
                                        identificationmetamorphique, identificationsedimentaire,
                                        lien_lithotheque)
+from phototheque import onglet_phototheque
+from reconnaissance import onglet_reconnaissance, proposer_photo
 from upload_image import uploader_image
 
 DOSSIER_PHOTOS = Path(__file__).parent / "photos"
+
+SECTIONS = ["Identificateur", "Reconnaissance par photo", "Photothèque", "La carte des kayous",
+            "Dictionnaire", "Objectif", "Administration"]
 
 
 def afficher_carte():
@@ -32,6 +38,7 @@ def afficher_objectif():
     st.write("La deuxième partie du projet est une carte participative qui permet de localiser des affleurements ou des structures d'intérêt géologique.")
     st.write("La dernière partie du projet est un dictionnaire des termes géologiques. Il est participatif et les utilisateurs peuvent faire des suggestions de modifications qui seront validées ou non par les administrateurs.")
     st.write("À plus long terme, le but est de réaliser la reconnaissance de roche grâce à de la reconnaissance d'image via du deep learning.")
+    st.write("Pour cela, le site construit une photothèque participative : les photos envoyées sont vérifiées puis publiées sous licence CC BY 4.0, et les données de localisation des photos sont supprimées. Pour faire retirer une de vos photos, écrivez à identificateur.de.roche@gmail.com.")
     st.write("By Edouard Azoulay")
 
 
@@ -63,11 +70,14 @@ def afficher_resultat(roche):
         st.markdown(f"🔎 [Voir les échantillons de {nom} de la lithothèque de l'ENS de Lyon]({lien})")
     st.write("Toutes les images sont issues de la lithothèque de l'ENS de Lyon :")
     st.markdown("https://lithotheque.ens-lyon.fr/index.php")
+    proposer_photo(nom)
 
 
 def identificateur_de_rochee():
     st.title("Identificateur de roche")
     st.write("Répondez aux questions suivantes pour identifier la roche que vous étudiez.")
+    if st.session_state.get("photo_a_identifier") is not None:
+        st.info("📷 À la fin, vous pourrez rattacher le résultat à la photo que vous avez envoyée.")
 
     type_roche = st.radio("La roche est-elle sédimentaire, magmatique ou métamorphique ?",
                           ["sédimentaire", "magmatique", "métamorphique"],
@@ -90,9 +100,15 @@ def identificateur_de_rochee():
 def main():
     st.set_page_config(page_title="Identificateur de roche", page_icon="🪨")
     st.sidebar.title("Menu de Navigation")
-    menu = st.sidebar.selectbox("Choisir une section", ["Identificateur", "La carte des kayous", "Dictionnaire", "Objectif"])
+    menu = st.sidebar.selectbox("Choisir une section", SECTIONS, key="menu")
     if menu == "Identificateur":
         identificateur_de_rochee()
+    if menu == "Reconnaissance par photo":
+        onglet_reconnaissance()
+    if menu == "Photothèque":
+        onglet_phototheque()
+    if menu == "Administration":
+        onglet_administration()
     if menu == "La carte des kayous":
         afficher_carte()
     if menu == "Objectif":

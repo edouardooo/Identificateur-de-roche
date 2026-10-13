@@ -8,7 +8,18 @@ Azoulay Edouard
 - **Identificateur** : une clé de détermination (questions oui/non) pour les roches sédimentaires, magmatiques et métamorphiques du programme de BCPST. Le code de la clé est dans `fonction_d_identification.py`.
 - **La carte des kayous** : une carte uMap participative des affleurements, sauvegardée chaque nuit dans `backups/` par GitHub Actions (seulement si elle a changé).
 - **Dictionnaire** : les termes de base sont dans `dictionnaire_base.csv` (modifiable avec un tableur ou un éditeur de texte). Les propositions des visiteurs arrivent dans Airtable et s'affichent une fois la case « validé » cochée.
+- **Reconnaissance par photo** : pour l'instant, les visiteurs y envoient des photos de roches (avec leur accord, licence CC BY 4.0) et indiquent la roche, éventuellement grâce à la clé. Chaque photo enrichit la photothèque, qui servira à la reconnaissance automatique. Le plan complet est dans [docs/plan-reconnaissance-par-photo.md](docs/plan-reconnaissance-par-photo.md).
+- **Photothèque** : les photos validées, roche par roche, et l'avancement de la collecte.
+- **Administration** (protégée par mot de passe) : valider, corriger ou rejeter les photos envoyées.
 - **Objectif** : la présentation du projet.
+
+## Mettre en route la photothèque (Supabase, gratuit)
+
+1. Créer un compte et un projet sur https://supabase.com.
+2. Dans le projet, menu « SQL Editor » : coller le contenu de `supabase/schema.sql` et cliquer sur « Run ».
+3. Dans « Project Settings » > « API Keys » : copier l'URL du projet et la clé secrète.
+4. Les mettre dans les secrets Streamlit, avec un mot de passe d'administration (voir `.streamlit/secrets.toml.exemple`).
+5. En local, vérifier que tout est bien branché : `python outils/verifier_supabase.py`
 
 ## Lancer le site sur son ordinateur
 

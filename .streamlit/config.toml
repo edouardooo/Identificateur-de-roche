@@ -1,0 +1,3 @@
+[server]
+# Taille maximale d'un fichier envoyé (photos), en Mo
+maxUploadSize = 10

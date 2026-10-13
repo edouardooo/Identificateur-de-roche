@@ -5,7 +5,7 @@ import pytest
 from streamlit.testing.v1 import AppTest
 
 from dictionnaire import definition_roche, termes_de_base
-from fonction_d_identification import NON_IDENTIFIEE, RECHERCHES_LITHOTHEQUE
+from fonction_d_identification import NON_IDENTIFIEE, RECHERCHES_LITHOTHEQUE, ROCHES
 
 DOSSIER = Path(__file__).parent.parent
 APP = str(DOSSIER / "identificateur_de_roche.py")
@@ -68,6 +68,12 @@ def test_toutes_les_roches_sont_atteignables(resultats):
     trouvees = {chemin[-1] for chemin in resultats}
     attendues = set(RECHERCHES_LITHOTHEQUE) | ROCHES_SANS_LIEN | {NON_IDENTIFIEE}
     assert trouvees == attendues
+
+
+def test_la_liste_des_roches_correspond_a_la_cle(resultats):
+    """La liste ROCHES (utilisée par la photothèque) doit suivre les changements de la clé."""
+    trouvees = {(chemin[0], chemin[-1]) for chemin in resultats if chemin[-1] != NON_IDENTIFIEE}
+    assert trouvees == {(famille, roche) for famille, roches in ROCHES.items() for roche in roches}
 
 
 def test_chaque_roche_a_une_definition(resultats):

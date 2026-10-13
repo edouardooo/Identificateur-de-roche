@@ -5,6 +5,26 @@ import streamlit as st
 # Résultat affiché quand aucune roche de la clé ne correspond aux réponses
 NON_IDENTIFIEE = "non identifiée"
 
+# Toutes les roches auxquelles la clé peut aboutir, par famille
+# (les tests vérifient que cette liste correspond bien à la clé ci-dessous)
+ROCHES = {
+    "sédimentaire": [
+        "pétrole", "tourbe", "lignite", "houille", "anthracite",
+        "galets et graviers", "brèche", "poudingue", "sable", "arkose", "grès",
+        "marne", "craie", "calcaire", "dolomie", "radiolarite", "silex",
+        "halite", "sylvite", "diatomite", "gypse en fer de lance", "gypse saccharoïde",
+        "argile ou silt", "siltite", "argilite", "bauxite",
+    ],
+    "magmatique": [
+        "obsidienne", "ponce", "rhyolite", "trachyte", "andésite", "basalte",
+        "granite", "granodiorite", "péridotite", "diorite", "gabbro",
+    ],
+    "métamorphique": [
+        "marbre", "éclogite", "migmatite", "ardoise", "micaschiste", "gneiss",
+        "schiste bleu", "amphibolite", "quartzite", "cornéenne",
+    ],
+}
+
 # Recherche à lancer sur la lithothèque de l'ENS de Lyon pour chaque roche
 # (une recherche renvoie la liste de leurs échantillons, avec photos).
 # Les roches absentes de ce dictionnaire n'ont pas d'échantillon sur leur site.
