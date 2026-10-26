@@ -38,6 +38,7 @@ create index if not exists photos_embedding_idx on public.photos
 -- Personne n'accède directement à la table depuis internet : seul le site, avec la
 -- clé secrète gardée dans les secrets Streamlit, peut lire et écrire.
 alter table public.photos enable row level security;
+revoke all on public.photos from anon, authenticated;
 grant select, insert, update, delete on public.photos to service_role;
 
 -- Nombre de photos validées pour chaque roche (page Photothèque)
@@ -67,6 +68,17 @@ revoke execute on function public.nombre_photos_validees() from public, anon, au
 revoke execute on function public.photos_proches(extensions.vector, int) from public, anon, authenticated;
 grant execute on function public.nombre_photos_validees() to service_role;
 grant execute on function public.photos_proches(extensions.vector, int) to service_role;
+
+-- Appelée chaque nuit par GitHub Actions (.github/workflows/backup.yml) avec la clé
+-- publique : sans activité pendant 7 jours, Supabase met le projet gratuit en pause.
+create or replace function public.ping()
+returns integer
+language sql stable
+set search_path = ''
+as $$ select 1 $$;
+
+revoke execute on function public.ping() from public;
+grant execute on function public.ping() to anon, service_role;
 
 -- Stockage privé des fichiers : les photos ne sont visibles que par des liens
 -- temporaires créés par le site, et seulement une fois validées.

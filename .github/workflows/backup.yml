@@ -14,6 +14,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    # Sans activité pendant 7 jours, Supabase met la photothèque en pause.
+    # La clé « publishable » est publique par nature : elle ne permet que d'appeler ping().
+    - name: Garder Supabase éveillé
+      run: >
+        curl -fsS -X POST "https://vriscloogmgeyjfzffsz.supabase.co/rest/v1/rpc/ping"
+        -H "apikey: sb_publishable_9M1ByaYr1-j5jsNUZ-qz2A_ehCur7rK"
+        -H "Content-Type: application/json" -d "{}"
+
     - name: Checkout code
       uses: actions/checkout@v4
 
